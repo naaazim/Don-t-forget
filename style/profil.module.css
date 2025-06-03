@@ -1,0 +1,195 @@
+.logo{
+    width: 120px;
+}
+.titre{
+    text-align: center;
+    font-family: "Makebond";
+    color: rgb(59, 124, 243);
+    font-size: 50px;
+}
+.profil{
+    font-family: "Bungee", sans-serif;
+    background-color: rgb(59, 124, 243);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 20px;
+    width: fit-content;
+    padding: 20px;
+    cursor: pointer;
+}
+.navigation{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 30px;
+}
+.popUp{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    padding: 10px 0;
+    border: solid 1px #aaa;
+    border-radius: 10px;
+    position: fixed;
+    right: 30px;
+    top: 120px;
+}
+.popUpButton{
+    background: transparent;
+    font-family: "Bungee", sans-serif;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    transition: all .5s;
+    text-align: left;
+}
+.popUpButton:hover{
+    background-color: rgb(59, 124, 243);
+    color: #fff;
+}
+.infos{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+.nomPrenom{
+    font-family: "Bungee", sans-serif;
+    display: flex;
+    align-items: center;
+    margin-left: 100px;
+    margin-bottom: 30px;
+    justify-content: center;
+    flex-direction: row-reverse;
+    gap: 20px;
+}
+.profilIcon{
+    font-size: 50px;
+}
+.tableau{
+    margin: auto;
+}
+.successPopup, .errorPopup{
+    width: fit-content;
+    padding: 20px 50px;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    border-radius: 10px;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+}
+.successPopup{
+    border: solid 1px rgb(38, 184, 38);
+    color: rgb(38, 184, 38);
+}
+.errorPopup{
+    border: solid 1px rgb(255, 0, 0);
+    color: rgb(255, 0, 0);
+}
+.mesLabels{
+    font-family: "Bungee", sans-serif;
+    transition: all .5s;
+    cursor: pointer;
+}
+.mesLabels:hover{
+    color: rgb(59, 124, 243)
+}
+.tableau td{
+    padding: 10px 0;
+}
+.tableau td:nth-child(even){
+    display: flex;
+    align-items: center;
+
+}
+.tableau td:nth-child(odd){
+    text-align: right;
+    padding-right: 5px;
+}
+.tableau td input{
+    border: solid 1px rgb(0, 0, 0);
+    width: 200px;
+    font-size: 15px;
+    padding: 10px;
+    outline: none;
+    font-family: System-ui;
+    background-color: #dedddd;
+}
+.tableau td input[type="email"]{
+    cursor:not-allowed;
+}
+.tableau td button{
+    font-size: 25px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all .5s;
+}
+.tableau td button:hover{
+    transform: scale(1.2);
+}
+.tableau td button[id="password"]{
+    margin-top: 8px;
+}
+.popup{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    padding: 20px;
+    border: solid 1px #aaa;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+.popup input{
+    border: solid 1px rgb(0, 0, 0);
+    width: 94%;
+    font-size: 15px;
+    padding: 15px 10px;
+    outline: none;
+    margin-bottom: 20px;
+    font-family: System-ui;
+}
+
+.divBoutons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: 100%;
+}
+.divBoutons button{
+    width: 100px;
+}
+.yes{
+    background-color: rgb(38, 184, 38);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 0;
+    font-family: "Bungee", sans-serif;
+    cursor: pointer;
+    transition: all .5s;
+}
+.no{
+    background-color: rgb(255, 0, 0);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 0;
+    font-family: "Bungee", sans-serif;
+    cursor: pointer;
+    transition: all .5s;
+}
+.yes:hover, .no:hover{
+    transform: scale(1.05);
+}

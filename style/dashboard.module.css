@@ -1,0 +1,166 @@
+.navigation{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 30px;
+}
+.logo{
+    width: 120px;
+}
+.profil{
+    font-family: "Bungee", sans-serif;
+    background-color: rgb(59, 124, 243);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 20px;
+    width: fit-content;
+    padding: 20px;
+    cursor: pointer;
+}
+.titre{
+    font-family: "Bungee", sans-serif;
+}
+.popUp{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    padding: 10px 0;
+    border: solid 1px #aaa;
+    border-radius: 10px;
+    position: fixed;
+    right: 30px;
+    top: 120px;
+}
+.popUpButton{
+    background: transparent;
+    font-family: "Bungee", sans-serif;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    transition: all .5s;
+    text-align: left;
+}
+.popUpButton:hover{
+    background-color: rgb(59, 124, 243);
+    color: #fff;
+}
+.ajouterUneTache{
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+.ajouterUneTache label{
+    font-family: "Bungee", sans-serif;
+    transition: all .5s;
+    cursor: pointer;
+}
+.ajouterUneTache label:hover{
+    color: rgb(59, 124, 243);
+}
+.ajouterUneTache button{
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    margin-top: 5px;
+    transition: all .5s;
+    cursor: pointer;
+}
+.ajouterUneTache button:hover{
+    transform: scale(1.15)
+}
+.formulaireTache{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: solid 1px #aaa;
+    padding: 60px 50px;
+    border-radius: 10px;
+}
+.popUpBouton{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+.popUpBouton:nth-child(even){
+    color: yellowgreen;
+}
+.formulaireTache label{
+    font-family: "Bungee", sans-serif;
+    cursor: pointer;
+}
+.formulaireTache label:hover{
+    color: rgb(59, 124, 243);
+}
+.formulaireTache input{
+    outline: none;
+    margin-bottom: 20px;
+    width: 96%;
+    padding: 10px 5px;
+}
+.yes{
+    background-color: rgb(38, 184, 38);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: "Bungee", sans-serif;
+    cursor: pointer;
+    transition: all .5s;
+}
+.no{
+    background-color: rgb(255, 0, 0);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-family: "Bungee", sans-serif;
+    cursor: pointer;
+    transition: all .5s;
+}
+.yes:hover, .no:hover{
+    transform: scale(1.05);
+}
+.listeDesTaches{
+    font-family: "Bungee", sans-serif;
+    margin-left: 20px;
+}
+.flex{
+    display: flex;
+    align-items: center;
+}
+.flex button{
+    background: transparent;
+    border: none;
+    font-size: 25px;
+    margin-top: 5px;
+    transition: all .5s;
+    cursor: pointer;
+}
+.flex button:hover{
+    transform: scale(1.15);
+}
+.error, .success{
+    width: fit-content;
+    padding: 20px 50px;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    border-radius: 10px;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+}
+.success{
+    border: solid 1px rgb(38, 184, 38);
+    color: rgb(38, 184, 38);
+}
+.error{
+    border: solid 1px rgb(255, 0, 0);
+    color: rgb(255, 0, 0);
+}
