@@ -18,6 +18,11 @@ function ListeDesTaches({ id }) {
         if (id) fetchTaches();
     }, [id]);
 
+    // Fonction pour retirer une tâche localement
+    const supprimerTacheLocalement = (tacheId) => {
+        setTaches(taches.filter((t) => t.id !== tacheId));
+    };
+
     if (error) return <p>{error}</p>;
 
     return (
@@ -27,8 +32,9 @@ function ListeDesTaches({ id }) {
             ) : (
                 <ul>
                     {taches.map((tache) => (
-                        <li key={tache.id}>{tache.texte} - Deadline: {new Date(tache.mustBeFinishedAt).toLocaleString()}
-                            <ModifierTache id = {tache.id}/>
+                        <li key={tache.id}>
+                            {tache.texte} - Deadline: {new Date(tache.mustBeFinishedAt).toLocaleString()}
+                            <ModifierTache id={tache.id} onDelete={() => supprimerTacheLocalement(tache.id)} />
                         </li>
                     ))}
                 </ul>

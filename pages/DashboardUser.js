@@ -31,20 +31,20 @@ function DashboardUser() {
         localStorage.removeItem("jwt_token");
         window.location.href = "/login";
     };
-
+    
     const handleSubmitTache = async () => {
-        setErrorMessage(""); // Réinitialiser les messages
+        setErrorMessage("");
         setSuccessMessage("");
 
         if (!tache || !deadline) {
             setErrorMessage("Veuillez remplir tous les champs.");
-            setTimeout(() => setErrorMessage(""), 2000);
+            setTimeout(() => setErrorMessage(""), 3000);
             return;
         }
-
+        const deadlineDate = new Date(deadline);
         const payload = {
             texte: tache,
-            mustBeFinishedAt: new Date(deadline).toISOString(),
+            mustBeFinishedAt: deadlineDate.toISOString(),
             user: { id: userId }
         };
 
@@ -55,10 +55,9 @@ function DashboardUser() {
             setPopUpTache(false);
             setTache("");
             setDeadline("");
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
-            
+            setToggleListe(false); // On force la réinitialisation de la liste
+            setTimeout(() => setToggleListe(true), 100); // Et on la relance brièvement après
+
         } catch (error) {
             console.error(error);
             if (error.response && error.response.data) {
@@ -66,9 +65,10 @@ function DashboardUser() {
             } else {
                 setErrorMessage("Erreur lors de la création de la tâche.");
             }
-            setTimeout(() => setErrorMessage(""), 2000);
+            setTimeout(() => setErrorMessage(""), 3000);
         }
     };
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -143,7 +143,9 @@ function DashboardUser() {
                         type="datetime-local"
                         id="deadline"
                         value={deadline}
-                        onChange={(e) => setDeadline(e.target.value)}
+                        onChange={(e) => {
+                            setDeadline(e.target.value)
+                        }}
                     />
                     <div className={styles.popUpBouton}>
                         <button className={styles.no} onClick={()=>{
