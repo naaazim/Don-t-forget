@@ -2,7 +2,7 @@ import axios from "axios";
 import { FiEdit } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
-
+import styles from "../style/modifierTache.module.css";
 function ModifierTache({ id, onDelete }) {
     const [Texte, setTexte] = useState("");
     const [Statut, setStatut] = useState("");
@@ -13,6 +13,15 @@ function ModifierTache({ id, onDelete }) {
     const [popUpNo, setPopUpNo] = useState(false);
     const [popUpYes, setPopUpYes] = useState(false);
 
+    // Fonction pour convertir une date ISO en format datetime-local (sans fuseau)
+    function toDatetimeLocal(isoString) {
+        if (!isoString) return "";
+        const date = new Date(isoString);
+        const offset = date.getTimezoneOffset();
+        const localDate = new Date(date.getTime() - offset * 60 * 1000);
+        return localDate.toISOString().slice(0, 16);
+    }
+
     useEffect(() => {
         if (togglePopup) {
             axios.get(`http://localhost:8080/api/v1/tache/getById/${id}`)
@@ -20,6 +29,7 @@ function ModifierTache({ id, onDelete }) {
                     const tache = res.data;
                     setTexte(tache.texte || "");
                     setStatut(tache.statut || "A_FAIRE");
+                    setReminder(toDatetimeLocal(tache.reminder));
                 })
                 .catch(err => {
                     setErrorMessage("Erreur lors du chargement de la tâche");
@@ -48,7 +58,7 @@ function ModifierTache({ id, onDelete }) {
             const reponse = await axios.put(`http://localhost:8080/api/v1/tache/update/${id}`, {
                 texte: Texte,
                 statut: Statut,
-                reminder: Reminder
+                reminder: Reminder ? Reminder : null
             });
             setSuccessMessage(reponse.data.message || "Tâche mise à jour avec succès.");
             setPopUpNo(false);
@@ -64,10 +74,10 @@ function ModifierTache({ id, onDelete }) {
 
     return (
         <>
-            <button onClick={() => setTogglePopUp(true)}>
+            <button onClick={() => setTogglePopUp(true)} className={styles.edit}>
                 <FiEdit />
             </button>
-            <button onClick={deleteTache}>
+            <button onClick={deleteTache} className={styles.delete}>
                 <MdDelete />
             </button>
 
@@ -94,8 +104,9 @@ function ModifierTache({ id, onDelete }) {
                     <input
                         type="datetime-local"
                         id="reminder"
+                        value={Reminder}
                         onChange={(e) => {
-                            setReminder(new Date(e.target.value).toISOString());
+                            setReminder(e.target.value);
                         }}
                     />
                     <button type="button" onClick={() => setTogglePopUp(false)}>

@@ -4,7 +4,8 @@ import styles from "../style/dashboard.module.css";
 import { useNavigate } from "react-router-dom";
 import ListeDesTaches from "../components/ListeDesTaches";
 import { FaArrowRight } from "react-icons/fa6";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import { MdAddCircleOutline } from "react-icons/md";
+
 function DashboardUser() {
     const [showPopup, setShowPopup] = useState(false);
     const [popUpTache, setPopUpTache] = useState(false);
@@ -12,64 +13,30 @@ function DashboardUser() {
     const [deadline, setDeadline] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
-    const [toggleListe, setToggleListe] = useState(false)
+    const [toggleListe, setToggleListe] = useState(false);
+    const [data, setData] = useState(null);
+
     const popupRef = useRef(null);
     const profilRef = useRef(null);
+    const tacheRef = useRef(null); // ➕ Ref pour le formulaire tâche
     const navigate = useNavigate();
 
-    const data = JSON.parse(localStorage.getItem("user")) || {};
-    const userId = data.id;
-    const prenom = data.prenom || "";
-    const nom = data.nom || "";
-    const initials = (prenom.charAt(0) || "") + (nom.charAt(0) || "");
-
-    const togglePopup = () => setShowPopup(!showPopup);
-    const togglePopUpTache = () => setPopUpTache(true);
-
-    const handleLogout = () => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("jwt_token");
-        window.location.href = "/login";
-    };
-    
-    const handleSubmitTache = async () => {
-        setErrorMessage("");
-        setSuccessMessage("");
-
-        if (!tache || !deadline) {
-            setErrorMessage("Veuillez remplir tous les champs.");
-            setTimeout(() => setErrorMessage(""), 3000);
+    // Redirection si l'utilisateur n'est pas connecté
+    useEffect(() => {
+        const userString = localStorage.getItem("user");
+        if (!userString) {
+            navigate("/login");
             return;
         }
-        const deadlineDate = new Date(deadline);
-        const payload = {
-            texte: tache,
-            mustBeFinishedAt: deadlineDate.toISOString(),
-            user: { id: userId }
-        };
-
-        try {
-            const response = await axios.post("http://localhost:8080/api/v1/tache/create", payload);
-            setSuccessMessage(response.data);
-            setTimeout(() => setSuccessMessage(""), 2000);
-            setPopUpTache(false);
-            setTache("");
-            setDeadline("");
-            setToggleListe(false); // On force la réinitialisation de la liste
-            setTimeout(() => setToggleListe(true), 100); // Et on la relance brièvement après
-
-        } catch (error) {
-            console.error(error);
-            if (error.response && error.response.data) {
-                setErrorMessage(error.response.data);
-            } else {
-                setErrorMessage("Erreur lors de la création de la tâche.");
-            }
-            setTimeout(() => setErrorMessage(""), 3000);
+        const parsedUser = JSON.parse(userString);
+        if (!parsedUser || !parsedUser.id) {
+            navigate("/login");
+            return;
         }
-    };
+        setData(parsedUser);
+    }, [navigate]);
 
-
+    // Fermeture popup profil
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -92,6 +59,82 @@ function DashboardUser() {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [showPopup]);
+
+    // ➕ Fermeture popup tâche si clic à l’extérieur
+    useEffect(() => {
+        const handleClickOutsideTache = (event) => {
+            if (
+                tacheRef.current &&
+                !tacheRef.current.contains(event.target)
+            ) {
+                setPopUpTache(false);
+                setTache(""); // Réinitialisation
+                setDeadline("");
+            }
+        };
+
+        if (popUpTache) {
+            document.addEventListener("mousedown", handleClickOutsideTache);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutsideTache);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutsideTache);
+        };
+    }, [popUpTache]);
+
+    if (!data) return null;
+
+    const userId = data.id;
+    const prenom = data.prenom || "";
+    const nom = data.nom || "";
+    const initials = (prenom.charAt(0) || "") + (nom.charAt(0) || "");
+
+    const togglePopup = () => setShowPopup(!showPopup);
+    const togglePopUpTache = () => setPopUpTache(true);
+
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("jwt_token");
+        window.location.href = "/login";
+    };
+
+    const handleSubmitTache = async () => {
+        setErrorMessage("");
+        setSuccessMessage("");
+
+        if (!tache || !deadline) {
+            setErrorMessage("Veuillez remplir tous les champs.");
+            setTimeout(() => setErrorMessage(""), 3000);
+            return;
+        }
+
+        const payload = {
+            texte: tache,
+            mustBeFinishedAt: deadline,
+            user: { id: userId }
+        };
+
+        try {
+            const response = await axios.post("http://localhost:8080/api/v1/tache/create", payload);
+            setSuccessMessage(response.data);
+            setTimeout(() => setSuccessMessage(""), 2000);
+            setPopUpTache(false);
+            setTache("");
+            setDeadline("");
+            setToggleListe(false);
+            setTimeout(() => setToggleListe(true), 100);
+        } catch (error) {
+            console.error(error);
+            if (error.response && error.response.data) {
+                setErrorMessage(error.response.data);
+            } else {
+                setErrorMessage("Erreur lors de la création de la tâche.");
+            }
+            setTimeout(() => setErrorMessage(""), 3000);
+        }
+    };
 
     return (
         <>
@@ -122,52 +165,51 @@ function DashboardUser() {
                     </button>
                 </div>
             )}
+
             <div className={styles.ajouterUneTache}>
-                <label htmlFor="ajout">Ajouter une tâche</label>
-                <button id="ajout" onClick={togglePopUpTache}><IoIosAddCircleOutline/></button>
+                <button id="ajout" onClick={togglePopUpTache}><MdAddCircleOutline />
+</button>
+                <label htmlFor="ajout">Ajouter une tâche :</label>
             </div>
 
             {popUpTache && (
-                <div className={styles.formulaireTache}>
-                    <label htmlFor="tache">Tâche :</label>
-                    <input
+                <div className={styles.formulaireTache} ref={tacheRef}>
+                    <textarea
                         type="text"
-                        id="tache"
                         placeholder="Quelle tâche souhaitez-vous ajouter ?"
                         value={tache}
+                        maxLength={255}
                         onChange={(e) => setTache(e.target.value)}
+                        autoFocus
                     />
-
                     <label htmlFor="deadline">Échéance :</label>
                     <input
                         type="datetime-local"
                         id="deadline"
                         value={deadline}
-                        onChange={(e) => {
-                            setDeadline(e.target.value)
-                        }}
+                        onChange={(e) => setDeadline(e.target.value)}
+                        required
                     />
                     <div className={styles.popUpBouton}>
-                        <button className={styles.no} onClick={()=>{
-                            setPopUpTache(false);
-                        }}>Annuler</button>
-                        <button className={styles.yes} onClick={handleSubmitTache}>Ajouter</button>
+                        <button className={styles.yes} onClick={handleSubmitTache}>
+                            Ajouter
+                        </button>
                     </div>
                 </div>
             )}
+
             <div className={styles.flex}>
-                <p className={styles.listeDesTaches}>Liste des tâches:</p>
-                <button onClick={() =>{
+                <button id="liste" onClick={() => {
                     setToggleListe(!toggleListe);
                 }}>
-                    <FaArrowRight/>
+                    <FaArrowRight />
                 </button>
+                <label htmlFor="liste" className={styles.listeDesTaches}>Liste des tâches :</label>
             </div>
 
-            {
-                toggleListe &&
-                <ListeDesTaches id = {userId}/>
-            }
+            {toggleListe && (
+                <ListeDesTaches id={userId} />
+            )}
 
             {errorMessage && (
                 <p className={styles.error}>{errorMessage}</p>

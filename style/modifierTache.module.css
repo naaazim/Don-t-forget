@@ -1,0 +1,15 @@
+.edit, .delete{
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    margin-top: 4px;
+    cursor: pointer;
+    transition: all .5s;
+}
+.edit{
+    margin-left: 10px;
+    color: rgb(59, 124, 243);
+}
+.edit:hover, .delete:hover{
+    transform: scale(1.2);
+}

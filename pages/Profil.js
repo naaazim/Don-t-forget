@@ -19,20 +19,24 @@ function Profil() {
     const [userData, setUserData] = useState(() => JSON.parse(localStorage.getItem("user")) || {});
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-
+    const navigate = useNavigate();
+    
     const popupRef = useRef(null);
     const profilRef = useRef(null);
-    const navigate = useNavigate();
-
     const nom = userData.nom || "";
     const prenom = userData.prenom || "";
     const email = userData.email || "";
     const id = userData.id;
     const initials = prenom.charAt(0) + nom.charAt(0);
     const token = localStorage.getItem("jwt_token");
-
+    useEffect(() => {
+        if (!userData.id) {
+            navigate("/login");
+        }
+    }, [userData, navigate]);
+    
     const togglePopup = () => setShowPopup(prev => !prev);
-
+    
     const handleLogout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("jwt_token");
@@ -124,6 +128,7 @@ function Profil() {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [showPopup]);
+    
 
     return (
         <>
@@ -141,52 +146,54 @@ function Profil() {
             {errorMessage && <div className={styles.errorPopup}>{errorMessage}</div>}
 
             <table className={styles.tableau}>
-                <tr>
-                    <td>
-                        <label className={styles.mesLabels} htmlFor="prenom">Prénom: </label>
-                    </td>
-                    <td>
-                        <input type="text" value={prenom} readOnly />
-                        <button onClick={() => {
-                            setEditPrenom(true);
-                            setEditNom(false);
-                            setShowPasswordPopup(false);
-                        }} id="prenom"><FiEdit /></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label className={styles.mesLabels} htmlFor="nom">Nom: </label>
-                    </td>
-                    <td>
-                        <input type="text" value={nom} readOnly />
-                        <button onClick={() => {
-                            setEditNom(true);
-                            setEditPrenom(false);
-                            setShowPasswordPopup(false);
-                        }} id="nom"><FiEdit /></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label className={styles.mesLabels}>Email: </label>
-                    </td>
-                    <td>
-                        <input type="email" value={email} readOnly />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label className={styles.mesLabels} htmlFor="password">Modifier le mot de passe:</label>
-                    </td>
-                    <td>
-                        <button onClick={() => {
-                            setShowPasswordPopup(true);
-                            setEditNom(false);
-                            setEditPrenom(false);
-                        }} id="password"><FaArrowRight /></button>
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label className={styles.mesLabels} htmlFor="prenom">Prénom: </label>
+                        </td>
+                        <td>
+                            <input type="text" value={prenom} readOnly />
+                            <button onClick={() => {
+                                setEditPrenom(true);
+                                setEditNom(false);
+                                setShowPasswordPopup(false);
+                            }} id="prenom"><FiEdit /></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label className={styles.mesLabels} htmlFor="nom">Nom: </label>
+                        </td>
+                        <td>
+                            <input type="text" value={nom} readOnly />
+                            <button onClick={() => {
+                                setEditNom(true);
+                                setEditPrenom(false);
+                                setShowPasswordPopup(false);
+                            }} id="nom"><FiEdit /></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label className={styles.mesLabels}>Email: </label>
+                        </td>
+                        <td>
+                            <input type="email" value={email} readOnly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label className={styles.mesLabels} htmlFor="password">Modifier le mot de passe:</label>
+                        </td>
+                        <td>
+                            <button onClick={() => {
+                                setShowPasswordPopup(true);
+                                setEditNom(false);
+                                setEditPrenom(false);
+                            }} id="password"><FaArrowRight /></button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
 
             {editPrenom && (

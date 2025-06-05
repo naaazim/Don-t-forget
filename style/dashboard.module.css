@@ -50,7 +50,13 @@
 .ajouterUneTache{
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    gap: 20px;
+    width: 95%;
+    margin: auto;
+    padding-bottom: 15px;
+    border-bottom: solid 1px #000;
+    margin-top: 30px;
+
 }
 .ajouterUneTache label{
     font-family: "Bungee", sans-serif;
@@ -63,33 +69,34 @@
 .ajouterUneTache button{
     background: transparent;
     border: none;
+    color: rgb(59, 124, 243);
     font-size: 30px;
-    margin-top: 5px;
+    margin-top: 6px;
     transition: all .5s;
     cursor: pointer;
 }
 .ajouterUneTache button:hover{
-    transform: scale(1.15)
+    transform: scale(1.15);
+    color: #000;
 }
 .formulaireTache{
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 400px;
     position: fixed;
+    background-color: #fff;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border: solid 1px #aaa;
     padding: 60px 50px;
     border-radius: 10px;
+    box-shadow: 1px 1px 10px #aaa;
 }
 .popUpBouton{
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     padding-top: 20px;
-}
-.popUpBouton:nth-child(even){
-    color: yellowgreen;
 }
 .formulaireTache label{
     font-family: "Bungee", sans-serif;
@@ -98,53 +105,77 @@
 .formulaireTache label:hover{
     color: rgb(59, 124, 243);
 }
+.formulaireTache textarea{
+    resize: none;
+    border: none;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: System-ui;
+    text-align: center;
+    outline: none;
+    margin-bottom: 50px;
+}
 .formulaireTache input{
+    border: none;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #777575;
+    font-family: System-ui;
     outline: none;
     margin-bottom: 20px;
-    width: 96%;
-    padding: 10px 5px;
+    width: 100%;
+    padding: 10px 0;
+}
+.formulaireTache input:valid{
+    color: #000;
 }
 .yes{
-    background-color: rgb(38, 184, 38);
-    color: #fff;
-    border: none;
+    background: transparent;
+    color: rgb(59, 124, 243);
+    border: solid 1px rgb(59, 124, 243);
     border-radius: 5px;
     padding: 10px 20px;
     font-family: "Bungee", sans-serif;
     cursor: pointer;
     transition: all .5s;
 }
-.no{
-    background-color: rgb(255, 0, 0);
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-family: "Bungee", sans-serif;
-    cursor: pointer;
-    transition: all .5s;
-}
-.yes:hover, .no:hover{
+.yes:hover{
     transform: scale(1.05);
+    background-color: rgb(59, 124, 243);
+    color: #fff;
 }
 .listeDesTaches{
     font-family: "Bungee", sans-serif;
-    margin-left: 20px;
 }
 .flex{
     display: flex;
     align-items: center;
+    gap: 20px;
+    width: 95%;
+    margin: auto;
+    border-bottom: solid 1px #000;
+    padding-bottom: 15px;
+    margin-top: 30px;
+}
+.flex label{
+    cursor: pointer;
+    transition: all .5s;
+}
+.flex label:hover{
+    color: rgb(59, 124, 243);
 }
 .flex button{
     background: transparent;
     border: none;
-    font-size: 25px;
-    margin-top: 5px;
+    font-size: 30px;
+    color: rgb(59, 124, 243);
+    margin-top: 10px;
     transition: all .5s;
     cursor: pointer;
 }
 .flex button:hover{
     transform: scale(1.15);
+    color: #000;
 }
 .error, .success{
     width: fit-content;

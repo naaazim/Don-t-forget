@@ -1,0 +1,29 @@
+.division{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: solid 1px #aaa;
+    padding: 60px 50px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 1px 1px 10px #aaa;
+
+}
+.rien{
+    text-align: center;
+    font-family: System-ui;
+    font-weight: bold;
+    font-size: 20px;
+    color: #777575;
+}
+.element{
+    /* list-style: none; */
+    font-family: System-ui;
+    font-size: 20px;
+}
+.echeance{
+    display: flex;
+    align-items: center;
+    margin-top: -30px;
+}

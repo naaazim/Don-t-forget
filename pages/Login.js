@@ -11,7 +11,7 @@ function Login() {
     const [Succes, setSucces] = useState(false);
     const navigate = useNavigate();
 
-    // ➕ Redirection automatique si le token existe déjà
+    //Redirection automatique si le token existe déjà
     useEffect(() => {
         const token = localStorage.getItem("jwt_token");
         if (token) {
