@@ -82,18 +82,20 @@ public class AppUserController {
         return ResponseEntity.status(HttpStatus.OK).body("Modification effectuée avec succés");
     }
     private String buildActivationEmail(String name, String activationLink) {
-        return "<div style=\"font-family:Arial,sans-serif; max-width:600px; padding:20px; color:#333;\">" +
-            "<h2 style=\"color:#4A90E2;\">Activation de votre compte</h2>" +
-            "<p>Bonjour " + name + ",</p>" +
-            "<p>Merci pour votre inscription ! Pour activer votre compte, veuillez cliquer sur le bouton ci-dessous :</p>" +
-            "<p style=\"text-align:left; margin: 20px 0;\">" +
-            "<a href=\"" + activationLink + "\" style=\"background-color:#4A90E2; color:#fff; padding:12px 24px; text-decoration:none; border-radius:5px; font-weight:bold;\">Activer mon compte</a>" +
-            "</p>" +
-            "<p>Ce lien expirera dans 15 minutes.</p>" +
-            "<p>À bientôt,<br>L'équipe Don't forget.</p>" +
-            "<hr style=\"border:none; border-top:1px solid #eee; margin-top:30px;\" />" +
-            "<small style=\"color:#999;\">Si vous n'avez pas créé ce compte, ignorez cet email.</small>" +
+        return "<div style='font-family: Arial, sans-serif; background-color: #ffffff; padding: 30px; max-width: 600px; margin: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); border: 1px solid #e0e0e0;'>" +
+                "<h2 style='color: #2c3e50; text-align: center;'>🎉 Bienvenue sur Don't Forget !</h2>" +
+                "<p style='font-size: 16px; color: #333;'>Bonjour <strong>" + name + "</strong>,</p>" +
+                "<p style='font-size: 16px; color: #333;'>Merci de vous être inscrit sur notre plateforme. Il ne vous reste plus qu’une étape pour commencer à utiliser votre compte.</p>" +
+                "<p style='font-size: 16px; color: #333;'>Veuillez cliquer sur le bouton ci-dessous pour activer votre compte :</p>" +
+                "<div style='text-align: center; margin: 30px 0;'>" +
+                    "<a href='" + activationLink + "' style='background-color: #4a90e2; color: white; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-size: 16px; font-weight: bold;'>Activer mon compte</a>" +
+                "</div>" +
+                "<p style='font-size: 14px; color: #777;'>⏳ Ce lien expirera dans 15 minutes.</p>" +
+                "<p style='font-size: 14px; color: #777;'>Si vous n'avez pas demandé cette inscription, vous pouvez ignorer cet email.</p>" +
+                "<hr style='border: none; border-top: 1px solid #eee; margin: 30px 0;' />" +
+                "<p style='font-size: 14px; color: #aaa; text-align: center;'>L’équipe Don't Forget vous remercie 🙌</p>" +
             "</div>";
     }
+
 
 }

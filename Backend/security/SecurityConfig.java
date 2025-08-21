@@ -14,6 +14,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.dontForget.appUser.AppUserService;
 
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+
 @AllArgsConstructor
 @EnableWebSecurity
 @Configuration
@@ -26,6 +32,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/**").permitAll()
                 .anyRequest().authenticated()
@@ -33,6 +40,7 @@ public class SecurityConfig {
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -43,5 +51,25 @@ public class SecurityConfig {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();
+    }
+
+    // === CORS très simple pour le front en 3000 avec cookies ===
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        // autorise ton front
+        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        // méthodes nécessaires (inclut la preflight OPTIONS)
+        config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
+        // en-têtes usuels
+        config.setAllowedHeaders(List.of("Content-Type","Authorization","X-Requested-With"));
+        // indispensable pour 'withCredentials: true'
+        config.setAllowCredentials(true);
+        // (optionnel) durée de cache de la preflight
+        config.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }

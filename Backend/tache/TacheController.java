@@ -89,7 +89,9 @@ public class TacheController {
             tache.setTexte(request.getTexte());
         }
         tacheRepository.save(tache);
-        reminderScheduler.scheduleReminder(tache);
+        if (tache.getReminder() != null) {
+            reminderScheduler.scheduleReminder(tache);
+        }
         return ResponseEntity.status(HttpStatus.OK).body("Tâche mise à jour avec succés");
     }
     @DeleteMapping("/delete/{id}")
