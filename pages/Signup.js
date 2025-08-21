@@ -31,16 +31,19 @@ function Signup(){
     }
     return (
         <>
+            <div className={styles.side}></div>
+            <img src="/task2.png" alt="taches" className={styles.task}/>
             <a href="/"><img src="/logo.png" alt="logo" className={styles.logo}/></a>
-            <h1 className={styles.titre}>Signup</h1>
-            {Succes && <p style={{color:"green", textAlign:"center"}}>{Message}</p>}
-            {Error && <p style={{color:"red", textAlign:"center"}}>{Message}</p>}
+            <p className={styles.sideText}>Inscrivez-vous et transformez votre planning <br/>en allié.</p>
             <form onSubmit={(e) => {
                 e.preventDefault();
                 save();
             }}
             className={styles.formulaire}
             >
+                <h1 className={styles.titre}>Signup</h1>
+                {Succes && <p style={{color:"green", textAlign:"center"}}>{Message}</p>}
+                {Error && <p style={{color:"red", textAlign:"center"}}>{Message}</p>}
                 <label htmlFor="nom" className={styles.libelles}> Nom: </label>
                 <input
                     type="text"

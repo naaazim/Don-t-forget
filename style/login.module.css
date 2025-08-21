@@ -10,13 +10,12 @@
 }
 .formulaire{
     display: flex;
+    position: fixed;
+    top: 40%;
+    left: 15%;
+    transform: translate(-15%, -40%);
     flex-direction: column;
     width: fit-content;
-    margin: auto;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 .formulaire input{
     border: solid 1px rgb(59, 124, 243);
@@ -52,6 +51,16 @@
     background-color: rgb(59, 124, 243);
     color: #fff;
 }
+.formulaire .create{
+    background-color: rgb(59, 124, 243);
+    color: #fff;
+    cursor: pointer;
+    transition: all .5s;
+}
+.formulaire .create:hover{
+    color: rgb(59, 124, 243);
+    background-color: #fff;
+}
 .mdpOublie{
     display: flex;
     align-items: center;
@@ -70,3 +79,28 @@
 .mdpOublie a:hover{
     text-decoration: underline;
 }
+.side{
+    height: 100vh;
+    width: 60vw;
+    background-color: rgb(59, 124, 243);
+    transform: skew(15deg);
+    position: fixed;
+    top: 0;
+    right: -10%;
+}
+.task{
+    width: 300px;
+    position: absolute;
+    top: 25%;
+    right: 15%;
+}
+.sideText{
+    font-family: "Bungee", sans-serif;
+    position: absolute;
+    top: 58%;
+    right: 6%;
+    font-size: 20px;
+    text-align: center;
+    color: #fff;
+}
+

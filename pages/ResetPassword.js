@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import styles from "../style/resetPassword.module.css";
 function ResetPassword() {
     const [newPassword, setNewPassword] = useState("");
     const [confirmedNewPassword, setConfirmedNewPassword] = useState("");
     const [message, setMessage] = useState("");
     const [searchParams] = useSearchParams();
-
+    const navigate = useNavigate();
     const token = searchParams.get("token");
 
     const confirm = async () => {
@@ -24,6 +24,9 @@ function ResetPassword() {
                 }
             );
             setMessage("✅ " + response.data);
+            setTimeout(() => {
+                navigate("/login");
+            },1000);
         } catch (error) {
             setMessage("❌" + error.response?.data || "Une erreur est survenue");
         }

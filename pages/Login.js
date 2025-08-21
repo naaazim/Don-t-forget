@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "../style/login.module.css";
 import { useNavigate } from "react-router-dom";
+import { getCookie } from "../utils/cookies";
 
 function Login() {
     const [Email, setEmail] = useState("");
@@ -11,31 +12,30 @@ function Login() {
     const [Succes, setSucces] = useState(false);
     const navigate = useNavigate();
 
-    //Redirection automatique si le token existe déjà
+    // Redirection automatique si le cookie "user" existe déjà
     useEffect(() => {
-        const token = localStorage.getItem("jwt_token");
-        if (token) {
+        const userCookie = getCookie("user");
+        if (userCookie) {
             navigate("/dashboard");
         }
     }, [navigate]);
 
     const connexion = async () => {
         try {
-            const response = await axios.post("http://localhost:8080/api/v1/login", {
-                email: Email,
-                password: Password
-            });
+            const response = await axios.post(
+                "http://localhost:8080/api/v1/login",
+                { email: Email, password: Password },
+                { withCredentials: true } // indispensable pour recevoir les cookies
+            );
 
-            const { token, ...userInfo } = response.data;
-            localStorage.setItem("user", JSON.stringify(userInfo));
-            localStorage.setItem("jwt_token", token);
-
+            // On ne stocke rien côté client (cookies déjà posés par le serveur)
+            setMessage(response.data?.message || "Connexion réussie");
             navigate("/dashboard");
             setSucces(true);
             setError(false);
         } catch (err) {
             const errorMessage = err.response?.data || "Erreur réseau ou serveur non disponible";
-            setMessage(errorMessage);
+            setMessage(typeof errorMessage === "string" ? errorMessage : JSON.stringify(errorMessage));
             setError(true);
             setSucces(false);
         }
@@ -44,13 +44,13 @@ function Login() {
     return (
         <>
             <a href="/"><img src="/logo.png" alt="logo" className={styles.logo}/></a>
-            <h1 className={styles.titre}>Login</h1>
-            {Succes && <p style={{color:"green", textAlign:"center"}}>{Message}</p>}
-            {Error && <p style={{color:"red", textAlign:"center"}}>{Message}</p>}
             <form onSubmit={(e) => {
                 e.preventDefault();
                 connexion();
             }} className={styles.formulaire}> 
+                <h1 className={styles.titre}>Login</h1>
+                {Succes && <p style={{color:"green",textAlign:"center"}}>{Message}</p>}
+                {Error && <p style={{color:"red", textAlign:"center"}}>{Message}</p>}
                 <label htmlFor="email">E-mail :</label>
                 <input
                     type="email"
@@ -75,7 +75,13 @@ function Login() {
                     <a href="/forget-password">Cliquez-ici</a>
                 </div>
                 <button type="submit">Connexion</button>
+                <button className={styles.create} onClick={() => {
+                    navigate("/Signup");
+                }}>Créer un compte</button>
             </form>
+            <div className={styles.side}></div>
+            <img src="/task.png" alt="task" className={styles.task}/>
+            <p className={styles.sideText}>Don't Forget : parce qu'organiser peut aussi être un <br/>plaisir.</p>
         </>
     );
 }

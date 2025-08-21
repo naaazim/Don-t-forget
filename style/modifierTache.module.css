@@ -1,15 +1,66 @@
 .edit, .delete{
     background: transparent;
     border: none;
-    font-size: 20px;
+    font-size: 25px;
     margin-top: 4px;
     cursor: pointer;
     transition: all .5s;
 }
+
 .edit{
-    margin-left: 10px;
-    color: rgb(59, 124, 243);
+    margin-left: 15px;
 }
 .edit:hover, .delete:hover{
     transform: scale(1.2);
+}
+.formulaire{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    position: fixed;
+    background-color: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: solid 1px #aaa;
+    padding: 60px 50px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #aaa;
+}
+.mesInput{
+    border: solid 1px #000;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    outline: none;
+    padding: 10px 8px;
+    font-family: System-ui;
+    font-size: 15px;
+    font-weight: bold;
+}
+.formulaire select{
+    padding: 10px 2px;
+}
+.mesLabels{
+    font-family: "Bungee", sans-serif;
+    margin-bottom: 5px;
+}
+.formulaire div{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.formulaire button{
+    background: transparent;
+    font-family: "Bungee", sans-serif;
+    border: solid 1px rgb(59, 124, 243);
+    border-radius: 15px;
+    color: rgb(59, 124, 243);
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 10px;
+    transition: all .5s;
+}
+.formulaire button:hover{
+    background-color: rgb(59, 124, 243);
+    color: #fff;
 }

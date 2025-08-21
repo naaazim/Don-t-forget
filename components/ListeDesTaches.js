@@ -1,59 +1,79 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import ModifierTache from "./ModiferTache";
 import styles from "../style/listeDesTaches.module.css";
 
-function ListeDesTaches({ id }) {
-    const [taches, setTaches] = useState([]);
+function ListeDesTaches({ id, taches, setTaches }) {
     const [error, setError] = useState("");
-    const [visible, setVisible] = useState(true); // <--- contrôle l'affichage
-    const divisionRef = useRef(null);
 
     useEffect(() => {
         const fetchTaches = async () => {
             try {
                 const reponse = await axios.get(`http://localhost:8080/api/v1/tache/getAllByUser/${id}`);
-                setTaches(reponse.data);
+                setTaches(reponse.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
             } catch (err) {
                 setError("Erreur lors de la récupération des tâches.");
             }
         };
-        if (id) fetchTaches();
-    }, [id]);
+        if (id && taches.length === 0) fetchTaches(); // éviter double appel
+    }, [id, setTaches, taches.length]);
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (divisionRef.current && !divisionRef.current.contains(event.target)) {
-                setVisible(false); // <--- fermer la division
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
-    // Fonction pour retirer une tâche localement
     const supprimerTacheLocalement = (tacheId) => {
         setTaches(taches.filter((t) => t.id !== tacheId));
     };
 
+    const handleCheckboxChange = async (tache) => {
+        const nouveauStatut = tache.statut === "FINI" ? "A_FAIRE" : "FINI";
+        try {
+            await axios.put(`http://localhost:8080/api/v1/tache/update/${tache.id}`, {
+                statut: nouveauStatut,
+            });
+
+            setTaches((prev) =>
+                prev.map((t) =>
+                    t.id === tache.id ? { ...t, statut: nouveauStatut } : t
+                )
+            );
+        } catch (err) {
+            console.error("Erreur lors de la mise à jour de la tâche :", err);
+        }
+    };
+
     if (error) return <p>{error}</p>;
-    if (!visible) return null;
 
     return (
-        <div className={styles.division} ref={divisionRef}>
+        <div className={styles.division}>
             {taches.length === 0 ? (
                 <p className={styles.rien}>Aucune tâche à effectuer pour l'instant.</p>
             ) : (
                 <ul>
                     {taches.map((tache) => (
                         <li key={tache.id} className={styles.element}>
-                            <h3>{tache.texte}</h3> 
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <input
+                                    type="checkbox"
+                                    checked={tache.statut === "FINI"}
+                                    onChange={() => handleCheckboxChange(tache)}
+                                    style={{
+                                        marginRight: "15px",
+                                        cursor: "pointer",
+                                        transform: "scale(1.5)",
+                                    }}
+                                />
+                                <div style={{
+                                    width:"100%",
+                                    display:"flex",
+                                    justifyContent:"space-between",
+                                    alignItems:"center"
+                                }}>
+                                    <h3 style={{ textDecoration: tache.statut === "FINI" ? "line-through" : "none" }}>
+                                        {tache.texte}
+                                    </h3>
+                                    <ModifierTache id={tache.id} onDelete={() => supprimerTacheLocalement(tache.id)} />
+                                </div>
+                            </div>
                             <div className={styles.echeance}>
                                 <p>Échéance: {new Date(tache.mustBeFinishedAt).toLocaleString()}</p>
-                                <ModifierTache id={tache.id} onDelete={() => supprimerTacheLocalement(tache.id)} />
                             </div>
                         </li>
                     ))}

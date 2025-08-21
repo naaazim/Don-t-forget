@@ -10,7 +10,6 @@
     letter-spacing: 2px;
 }
 .formulaire{
-    margin-top: 50px;
     border-radius: 20px;
     padding: 50px 100px;
     display: flex;
@@ -18,9 +17,9 @@
     justify-content: center;
     width: fit-content;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 40%;
+    right: 10%;
+    transform: translate(10%, -40%);
 }
 .formulaire input{
     margin:  5px 0 20px 0;
@@ -49,7 +48,7 @@
     padding-top: 30px;
 }
 .soumission{
-    width: 170px;
+    width: 180px;
     color: rgb(59, 124, 243);
     border: solid 1px rgb(59, 124, 243);
     background: transparent;
@@ -64,7 +63,7 @@
     color: #fff;
 }
 .connexion{
-    width: 170px;
+    width: 180px;
     color: #fff;
     border: solid 1px #fff;
     background: rgb(59, 124, 243);
@@ -78,4 +77,29 @@
     background-color: #fff;
     color: rgb(59, 124, 243);
     border: solid 1px rgb(59, 124, 243);
+}
+.side{
+    height: 100vh;
+    width: 60vw;
+    background-color: rgb(59, 124, 243);
+    transform: skew(15deg);
+    position: fixed;
+    top: 0;
+    left: -10%;
+    z-index: -999;
+}
+.task{
+    width: 400px;
+    position: absolute;
+    top: 25%;
+    left: 12%;
+}
+.sideText{
+    font-family: "Bungee", sans-serif;
+    position: absolute;
+    top: 58%;
+    left: 6%;
+    font-size: 20px;
+    text-align: center;
+    color: #fff;
 }

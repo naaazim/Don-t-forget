@@ -3,8 +3,8 @@ import axios from "axios";
 import styles from "../style/dashboard.module.css";
 import { useNavigate } from "react-router-dom";
 import ListeDesTaches from "../components/ListeDesTaches";
-import { FaArrowRight } from "react-icons/fa6";
-import { MdAddCircleOutline } from "react-icons/md";
+import { IoMdAdd } from "react-icons/io";
+import { getCookie } from "../utils/cookies";
 
 function DashboardUser() {
     const [showPopup, setShowPopup] = useState(false);
@@ -12,31 +12,32 @@ function DashboardUser() {
     const [tache, setTache] = useState("");
     const [deadline, setDeadline] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
-    const [toggleListe, setToggleListe] = useState(false);
     const [data, setData] = useState(null);
+    const [taches, setTaches] = useState([]);
 
     const popupRef = useRef(null);
     const profilRef = useRef(null);
-    const tacheRef = useRef(null); // ➕ Ref pour le formulaire tâche
+    const tacheRef = useRef(null);
     const navigate = useNavigate();
 
-    // Redirection si l'utilisateur n'est pas connecté
     useEffect(() => {
-        const userString = localStorage.getItem("user");
+        const userString = getCookie("user");
         if (!userString) {
             navigate("/login");
             return;
         }
-        const parsedUser = JSON.parse(userString);
-        if (!parsedUser || !parsedUser.id) {
+        try {
+            const parsedUser = JSON.parse(decodeURIComponent(userString));
+            if (!parsedUser || !parsedUser.id) {
+                navigate("/login");
+                return;
+            }
+            setData(parsedUser);
+        } catch {
             navigate("/login");
-            return;
         }
-        setData(parsedUser);
     }, [navigate]);
 
-    // Fermeture popup profil
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -60,15 +61,11 @@ function DashboardUser() {
         };
     }, [showPopup]);
 
-    // ➕ Fermeture popup tâche si clic à l’extérieur
     useEffect(() => {
         const handleClickOutsideTache = (event) => {
-            if (
-                tacheRef.current &&
-                !tacheRef.current.contains(event.target)
-            ) {
+            if (tacheRef.current && !tacheRef.current.contains(event.target)) {
                 setPopUpTache(false);
-                setTache(""); // Réinitialisation
+                setTache("");
                 setDeadline("");
             }
         };
@@ -94,16 +91,17 @@ function DashboardUser() {
     const togglePopup = () => setShowPopup(!showPopup);
     const togglePopUpTache = () => setPopUpTache(true);
 
-    const handleLogout = () => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("jwt_token");
+    const handleLogout = async () => {
+        try {
+            await axios.post("http://localhost:8080/api/v1/logout", {}, { withCredentials: true });
+        } catch {}
+        // Purge aussi le cookie "user" côté client (au cas où backend non joignable)
+        document.cookie = "user=; Path=/; Max-Age=0; SameSite=Lax";
         window.location.href = "/login";
     };
 
     const handleSubmitTache = async () => {
         setErrorMessage("");
-        setSuccessMessage("");
-
         if (!tache || !deadline) {
             setErrorMessage("Veuillez remplir tous les champs.");
             setTimeout(() => setErrorMessage(""), 3000);
@@ -117,14 +115,13 @@ function DashboardUser() {
         };
 
         try {
-            const response = await axios.post("http://localhost:8080/api/v1/tache/create", payload);
-            setSuccessMessage(response.data);
-            setTimeout(() => setSuccessMessage(""), 2000);
+            await axios.post("http://localhost:8080/api/v1/tache/create", payload, { withCredentials: true });
+
+            const res = await axios.get(`http://localhost:8080/api/v1/tache/getAllByUser/${userId}`, { withCredentials: true });
+            setTaches(res.data.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)));
             setPopUpTache(false);
             setTache("");
             setDeadline("");
-            setToggleListe(false);
-            setTimeout(() => setToggleListe(true), 100);
         } catch (error) {
             console.error(error);
             if (error.response && error.response.data) {
@@ -167,15 +164,15 @@ function DashboardUser() {
             )}
 
             <div className={styles.ajouterUneTache}>
-                <button id="ajout" onClick={togglePopUpTache}><MdAddCircleOutline />
-</button>
-                <label htmlFor="ajout">Ajouter une tâche :</label>
+                <button onClick={togglePopUpTache}>
+                    <IoMdAdd />
+                    Ajouter une tâche
+                </button>
             </div>
 
             {popUpTache && (
                 <div className={styles.formulaireTache} ref={tacheRef}>
                     <textarea
-                        type="text"
                         placeholder="Quelle tâche souhaitez-vous ajouter ?"
                         value={tache}
                         maxLength={255}
@@ -199,25 +196,12 @@ function DashboardUser() {
             )}
 
             <div className={styles.flex}>
-                <button id="liste" onClick={() => {
-                    setToggleListe(!toggleListe);
-                }}>
-                    <FaArrowRight />
-                </button>
-                <label htmlFor="liste" className={styles.listeDesTaches}>Liste des tâches :</label>
+                <label htmlFor="liste" className={styles.listeDesTaches}>To do</label>
             </div>
 
-            {toggleListe && (
-                <ListeDesTaches id={userId} />
-            )}
+            <ListeDesTaches id={userId} taches={taches} setTaches={setTaches} />
 
-            {errorMessage && (
-                <p className={styles.error}>{errorMessage}</p>
-            )}
-
-            {successMessage && (
-                <p className={styles.success}>{successMessage}</p>
-            )}
+            {errorMessage && <p className={styles.error}>{errorMessage}</p>}
         </>
     );
 }
