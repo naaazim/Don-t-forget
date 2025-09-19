@@ -61,3 +61,42 @@
 .apostrophe{
     color: rgb(59, 124, 243);
 }
+.division{
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+}
+.division button{
+    cursor: pointer;
+    border: solid 1.5px rgb(59, 124, 243);
+    color: rgb(59, 124, 243);
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 17px;
+    gap: 20px;
+    font-family: "Bungee", sans-serif;
+    transition: all .5s;
+}
+.division button:hover{
+    color: #fff;
+    background-color: rgb(59, 124, 243);
+}
+.fleche{
+    font-size: 25px;
+    font-weight: bold;
+    transition: all .5s;
+}
+.division button:hover .fleche{
+    transform: translateX(7px);
+}
+.footer{
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    color: #000;
+    font-family: "Bungee", sans-serif;
+}

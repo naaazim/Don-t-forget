@@ -1,0 +1,27 @@
+.liste{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+    list-style: none;
+    background-color: #fff;
+    width: fit-content;
+    padding: 15px 30px;
+    border-radius: 50px;
+
+}
+
+.liste li a{
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    color: #737373;
+    font: normal 20px Inter, Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    font-family: 20px i; 
+    cursor: pointer;
+    transition: all .5s;
+}
+.liste li:hover a{
+    color: #000;
+}
