@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+@font-face {
+    font-family: 'makebond';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''), url('https://fonts.cdnfonts.com/s/123939/Makebond-E46KW.woff') format('woff');
+}
+
+.navigation{
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+}
+.logo{
+    width: 120px;
+    margin-right: 150px;
+}
+.navigation2{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 20px;
+    padding-right: 20px;
+}
+.signup{
+    color: rgb(59, 124, 243);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+.login{
+    color: rgb(59, 124, 243);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid rgb(59, 124, 243);
+    border-radius: 20px;
+    padding: 10px 15px;
+    transition: all .5s;
+}
+.login:hover{
+    background-color: rgb(59, 124, 243);
+    color: #fff;
+}
+.titre{
+    font-family: "Makebond";
+    text-align: center;
+    letter-spacing: 2px;
+    color: rgb(59, 124, 243);
+    margin-top: 450px;
+    font-size: 45px;
+}
+.presentation{
+    text-align: center;
+    color: #000;
+    font-family: "Bungee", sans-serif;
+    font-size: 20px
+}
+.apostrophe{
+    color: rgb(59, 124, 243);
+}
+.division{
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+}
+.division button{
+    cursor: pointer;
+    border: solid 1.5px rgb(59, 124, 243);
+    color: rgb(59, 124, 243);
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 17px;
+    gap: 20px;
+    font-family: "Bungee", sans-serif;
+    transition: all .5s;
+}
+.division button:hover{
+    color: #fff;
+    background-color: rgb(59, 124, 243);
+}
+.fleche{
+    font-size: 25px;
+    font-weight: bold;
+    transition: all .5s;
+}
+.division button:hover .fleche{
+    transform: translateX(7px);
+}
+.footer{
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    color: #000;
+    font-family: "Bungee", sans-serif;
+}
+.github{
+    font-size:30px;
+    display: flex;
+    align-items:center;
+    justify-content:end;
+    gap:50px;
+    padding-left:20px;
+}
+@media screen and (max-width:1250px){
+    .github{
+        padding-left: 0;
+    }
+    .signup{
+        font-size: 17px;
+    }
+    .login{
+        font-size: 17px;
+    }
+    .titre{
+        margin-top: 300px;
+        font-size: 30px;
+    }
+    .presentation{
+        font-size: 17px
+    }
+    .logo{
+        margin-right: 0;
+    }
+    .division button{
+        font-size: 15px;
+    }
+    .fleche{
+        font-size: 23px;
+    }
+    .footer{
+        font-size: 13px;
+    }
+}
+@media screen and (max-width:600px){
+    .logo{
+        width: 100px;
+    }
+}
+@media screen and (max-width:500px){
+    .titre{
+        font-size: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }.presentation{
+        font-size: 13px;
+        margin-left: 10px;
+        margin-right: 10px;
+
+    }
+}
