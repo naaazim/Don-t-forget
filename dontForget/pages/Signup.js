@@ -3,6 +3,7 @@ import axios from "../axiosConfig";
 import styles from "../style/signup.module.css"
 import { useNavigate } from "react-router-dom";
 import { RiEyeCloseLine, RiEyeFill } from "react-icons/ri";
+import Google from "../components/Google";
 
 function Signup(){
     const [Nom, setNom] = useState("");
@@ -33,7 +34,9 @@ function Signup(){
             setSucces(false);
         }
     }
-
+    const OAuth2 = () => {
+        window.location.href = "http://dontforget.site/oauth2/authorization/google";  
+    }
     return (
         <>
             <div className={styles.side}></div>
@@ -103,6 +106,7 @@ function Signup(){
                     <button type="submit" className={styles.soumission}>S'inscrire</button>
                     <button className={styles.connexion} onClick={()=>{navigate("/Login")}}>J'ai déjà un compte</button>
                 </div>
+                <Google onClick={OAuth2}/>
             </form>
         </>
     )

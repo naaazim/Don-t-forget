@@ -3,17 +3,21 @@ package com.example.dontForget.tache;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+
 import com.example.dontForget.appUser.AppUser;
 import com.example.dontForget.appUser.AppUserRepository;
+
 import lombok.AllArgsConstructor;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @AllArgsConstructor
 @RequestMapping("api/v1/tache")
 public class TacheController {
@@ -26,12 +30,30 @@ public class TacheController {
             DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     @PostMapping("/create")
-    public ResponseEntity<?> createTache(@RequestBody Tache tache) {
-        Optional<AppUser> userOptional = appUserRepository.findById(tache.getUser().getId());
-        if (!userOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    public ResponseEntity<?> createTache(@RequestBody Tache tache, Authentication authentication) {
+        AppUser user;
+
+        if (authentication.getPrincipal() instanceof OAuth2User oauthUser) {
+            // 🔥 On récupère l’email (qui est garanti par Google)
+            String email = oauthUser.getAttribute("email");
+            if (email == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("Utilisateur OAuth2 invalide : email manquant");
+            }
+
+            user = appUserRepository.findByEmail(email);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Utilisateur OAuth2 non trouvé en base");
+            }
+        } else {
+            // Cas JWT classique
+            String email = authentication.getName();
+            user = appUserRepository.findByEmail(email);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur non trouvé");
+            }
         }
-        AppUser user = userOptional.get();
 
         OffsetDateTime nowUtc = OffsetDateTime.now(ZoneOffset.UTC);
 
@@ -47,29 +69,28 @@ public class TacheController {
         tacheRepository.save(tache);
 
         if (tache.getReminder() != null) {
+            System.out.println("✅ Planification du rappel pour " + user.getEmail()
+                    + " à " + tache.getReminder());
             reminderScheduler.scheduleReminder(tache);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body("Tâche créée avec succès");
+        return ResponseEntity.ok("Tâche créée avec succès");
     }
 
     @GetMapping("/getById/{id}")
     public ResponseEntity<?> getTacheById(@PathVariable Long id) {
-        Optional<Tache> tacheOptional = tacheRepository.findById(id);
-        if (!tacheOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aucune tâche avec cet ID");
-        }
-        return ResponseEntity.ok(tacheOptional.get());
+        return tacheRepository.findById(id)
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Aucune tâche avec cet ID"));
     }
 
     @GetMapping("/getAllByUser/{id}")
     public ResponseEntity<?> getAll(@PathVariable Long id) {
-        Optional<AppUser> userOptional = appUserRepository.findById(id);
-        if (!userOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aucun utilisateur avec cet ID");
-        }
-        List<Tache> maListe = tacheRepository.findByUser(userOptional.get());
-        return ResponseEntity.ok(maListe);
+        return appUserRepository.findById(id)
+                .<ResponseEntity<?>>map(user -> ResponseEntity.ok(tacheRepository.findByUser(user)))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Aucun utilisateur avec cet ID"));
     }
 
     @PutMapping("/update/{id}")
@@ -108,6 +129,8 @@ public class TacheController {
         tacheRepository.save(tache);
 
         if (tache.getReminder() != null) {
+            System.out.println("🔄 Mise à jour du rappel pour " + tache.getUser().getEmail()
+                    + " à " + tache.getReminder());
             reminderScheduler.scheduleReminder(tache);
         }
 

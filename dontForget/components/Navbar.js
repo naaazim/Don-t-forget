@@ -1,4 +1,4 @@
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { TbArrowDownToArc } from "react-icons/tb";
 import styles from "../style/navbar.module.css";
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ function Navbar(){
                 onMouseLeave={
                     ()=>{setAPropos(false)}
                 }
-                >A propos <MdKeyboardArrowDown/></li>
+                >A propos <TbArrowDownToArc/></li>
                 {aPropos &&(<p className={styles.aPropos}>Don<span style={{color:"rgb(59, 124, 243)", fontWeight:"bold"}}>’</span>t forget est une application conçue pour vous aider à mieux organiser vos journées.
                 Notre objectif est simple : vous offrir un outil intuitif et agréable qui vous accompagne dans la gestion de vos tâches quotidiennes.       
                 Avec Don<span style={{color:"rgb(59, 124, 243)", fontWeight:"bold"}}>’</span>t forget, vous pouvez :<br/>
@@ -29,7 +29,7 @@ function Navbar(){
                 <li 
                     onMouseEnter={() => setFonctionnement(true)}
                     onMouseLeave={() => setFonctionnement(false)}
-                >Fonctionnement<MdKeyboardArrowDown/></li>
+                >Fonctionnement<TbArrowDownToArc/></li>
                 {fonctionnement && (
                         <p className={styles.fonctionnement}>
                             Avec Don<span style={{color:"rgb(59, 124, 243)", fontWeight:"bold"}}>’</span>t Forget, organiser vos journées devient facile :<br/>
@@ -41,7 +41,7 @@ function Navbar(){
                             En quelques clics, vos journées sont mieux organisées et vos tâches toujours sous contrôle.
                         </p>
                     )}
-                <li>Contact<MdKeyboardArrowDown/></li>
+                <li>Contact<TbArrowDownToArc/></li>
             </ul>
 
         </>

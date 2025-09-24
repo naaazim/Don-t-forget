@@ -14,7 +14,7 @@
 .liste>li{
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 8px;
     color: #737373;
     font: normal 22px Inter, Arial, Helvetica, sans-serif;
     text-decoration: none;

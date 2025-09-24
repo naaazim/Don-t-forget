@@ -1,6 +1,9 @@
 .logo{
     width: 120px;
     height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 .titre{
     font-family: "Makebond";
@@ -37,30 +40,41 @@
 .formulaire label:hover{
     color: rgb(59, 124, 243);
 }
-.formulaire button{
-    background: transparent;
-    font-family: "Bungee", sans-serif;
+
+.boutons{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding-top: 10px;
+    margin: 15px 0 25px 0;
+}
+.boutons button{
+    width: 170px;
     border: solid 1px rgb(59, 124, 243);
-    border-radius: 15px;
-    color: rgb(59, 124, 243);
-    cursor: pointer;
-    margin-top: 20px;
+    background: transparent;
+    border-radius: 20px;
+    font-family: "Bungee", sans-serif;
     padding: 15px 0;
-    transition: all .5s;
-}
-.formulaire button:hover{
-    background-color: rgb(59, 124, 243);
-    color: #fff;
-}
-.formulaire .create{
-    background-color: rgb(59, 124, 243);
-    color: #fff;
     cursor: pointer;
-    transition: all .5s;
+    transition: all .4s;
+
 }
-.formulaire .create:hover{
-    color: rgb(59, 124, 243);
+.boutons button[type="button"]{
     background-color: #fff;
+    color: rgb(59, 124, 243);
+}
+.boutons button[type="button"]:hover{
+    color: #fff;
+    background-color: rgb(59, 124, 243);
+}
+.boutons button[type="submit"]{
+    color: #fff;
+    background-color: rgb(59, 124, 243);
+}
+.boutons button[type="submit"]:hover{
+    background-color: #fff;
+    color: rgb(59, 124, 243);
 }
 .mdpOublie{
     display: flex;

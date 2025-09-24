@@ -1,4 +1,7 @@
 .logo{
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 120px;
     height: auto;
 }
@@ -45,7 +48,8 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: row-reverse;
-    padding-top: 30px;
+    padding-top: 10px;
+    margin-bottom: 20px;
 }
 .soumission{
     width: 170px;

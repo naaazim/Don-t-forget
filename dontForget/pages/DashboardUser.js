@@ -66,7 +66,7 @@ function DashboardUser() {
             await axios.post("/api/v1/logout", {}, { withCredentials: true });
         } catch {}
         document.cookie = "user=; Path=/; Max-Age=0; SameSite=Lax";
-        window.location.href = "/login";
+        window.location.href = "/Login";
     };
 
     const handleSubmitTache = async () => {
@@ -80,7 +80,6 @@ function DashboardUser() {
         const payload = {
             texte: tache,
             mustBeFinishedAt: new Date(deadline).toISOString(), // 🔥 conversion ISO
-            user: { id: data.id }
         };
 
         try {

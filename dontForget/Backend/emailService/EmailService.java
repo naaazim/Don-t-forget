@@ -21,16 +21,23 @@ public class EmailService {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
-            helper.setText(htmlContent, true); 
+            helper.setText(htmlContent, true);
             helper.setTo(to);
             helper.setSubject(subject);
-
-            // Nom affiché dans l'email
             helper.setFrom(new InternetAddress("contact@dontforget.site", "Don't forget", "UTF-8"));
 
+            System.out.println("📨 Tentative d’envoi d’un email à " + to + " avec sujet : " + subject);
             mailSender.send(mimeMessage);
+            System.out.println("✅ Email envoyé avec succès à " + to);
+
         } catch (MessagingException | UnsupportedEncodingException e) {
+            System.err.println("❌ Erreur lors de l’envoi d’email à " + to + " : " + e.getMessage());
+            e.printStackTrace();
             throw new RuntimeException("Erreur lors de l'envoi de l'e-mail", e);
+        } catch (Exception e) {
+            System.err.println("❌ Erreur inattendue : " + e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
     }
 }

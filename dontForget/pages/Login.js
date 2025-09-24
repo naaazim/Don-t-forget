@@ -4,6 +4,7 @@ import styles from "../style/login.module.css";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../utils/cookies";
 import { RiEyeCloseLine, RiEyeFill } from "react-icons/ri";
+import Google from "../components/Google";
 
 function Login() {
     const [Email, setEmail] = useState("");
@@ -21,7 +22,9 @@ function Login() {
             navigate("/dashboard");
         }
     }, [navigate]);
-
+    const OAuth2 = () => {
+        window.location.href = "http://dontforget.site/oauth2/authorization/google";  
+    }
     const connexion = async () => {
         try {
             const response = await axios.post(
@@ -67,6 +70,7 @@ function Login() {
                 <label htmlFor="password">Mot de passe :</label>
                 <div className={styles["password-container"]}>
                     <input
+                        style={{margin:"0 0 15px 0"}}
                         type={showPassword ? "text" : "password"}
                         placeholder="Entrez votre mot de passe"
                         id="password"
@@ -86,10 +90,13 @@ function Login() {
                     <label>Mot de passe oublié ?</label>
                     <a href="/forget-password">Cliquez-ici</a>
                 </div>
-                <button type="submit">Connexion</button>
-                <button type="button" className={styles.create} onClick={() => {
-                    navigate("/Signup");
-                }}>Créer un compte</button>
+                <div className={styles.boutons}>
+                    <button type="submit">Connexion</button>
+                    <button type="button" className={styles.create} onClick={() => {
+                        navigate("/Signup");
+                    }}>Créer un compte</button>
+                </div>
+                <Google onClick={OAuth2}/>
             </form>
             <div className={styles.side}></div>
             <img src="/task.png" alt="task" className={styles.task}/>

@@ -30,8 +30,10 @@ public class ReminderScheduler {
         Duration delay = Duration.between(now, reminder);
 
         if (delay.isNegative() || delay.isZero()) return;
+        System.out.println("⏰ Rappel demandé à " + reminder + " (dans " + delay.toSeconds() + " secondes)");
 
         ScheduledFuture<?> future = scheduler.schedule(() -> {
+            System.out.println("📧 Email en cours d’envoi à " + tache.getUser().getEmail());
             emailService.sendHtmlEmail(
                 tache.getUser().getEmail(),
                 "Rappel de votre tâche",

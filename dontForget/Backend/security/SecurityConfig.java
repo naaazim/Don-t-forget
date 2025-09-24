@@ -34,15 +34,26 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // important
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/register", "/api/v1/login", "/api/v1/confirm").permitAll()
+                .requestMatchers(
+                        "/api/v1/register",
+                        "/api/v1/login",
+                        "/api/v1/confirm",
+                        "/oauth2/**",
+                        "/login/oauth2/**"
+                ).permitAll()
                 .anyRequest().authenticated()
             )
+            // 🔹 Activation OAuth2 login avec Google
+            .oauth2Login(oauth2 -> oauth2
+                .defaultSuccessUrl("/api/v1/oauth2/success", true) 
+                .failureUrl("/api/v1/oauth2/failure")
+            )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -56,16 +67,17 @@ public class SecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
-    // === CORS très simple pour le front en 3000 avec cookies ===
-   @Bean
+    // === CORS très simple pour le front ===
+    @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(
-            "http://localhost:3000",    // dev local
-            "http://92.113.27.79",     // accès IP
-            "http://dontforget.site",  // domaine sans HTTPS
-            "https://dontforget.site", // domaine avec HTTPS
-            "https://www.dontforget.site"
+            "http://localhost:3000",
+            "http://92.113.27.79",
+            "http://dontforget.site",
+            "https://dontforget.site",
+            "https://www.dontforget.site",
+            "http://www.dontforget.site"
         ));
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
         config.setAllowedHeaders(List.of("Content-Type","Authorization","X-Requested-With"));

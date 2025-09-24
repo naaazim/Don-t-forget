@@ -23,16 +23,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
 
-    // Ne PAS filtrer certains endpoints publics (login / logout)
-   @Override
+    @Override
     protected boolean shouldNotFilter(@NonNull HttpServletRequest request) {
         String path = request.getServletPath();
         return path.startsWith("/api/v1/login")
             || path.startsWith("/api/v1/logout")
             || path.startsWith("/api/v1/register")
-            || path.startsWith("/api/v1/confirm");
+            || path.startsWith("/api/v1/confirm")
+            || path.startsWith("/api/v1/oauth2")   // <-- exclure aussi Google OAuth2 custom controller
+            || path.startsWith("/oauth2")
+            || path.startsWith("/login/oauth2");
     }
-
 
 
     @Override
@@ -43,13 +44,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String jwt = null;
 
-        // 1) Header Bearer (si tu envoies encore Authorization)
         final String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
         }
 
-        // 2) Fallback: cookie "jwt_token"
         if (jwt == null && request.getCookies() != null) {
             for (jakarta.servlet.http.Cookie c : request.getCookies()) {
                 if ("jwt_token".equals(c.getName())) {
@@ -69,9 +68,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             } catch (JwtException e) {
-                // JWT expiré / invalide -> on ignore, on continue sans authentifier
-                // (optionnel) tu peux aussi nettoyer le cookie expiré :
-                // response.addHeader("Set-Cookie", "jwt_token=; Path=/; Max-Age=0; SameSite=Lax");
+                // JWT expiré / invalide -> on ignore
             }
         }
 
