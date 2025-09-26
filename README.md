@@ -4,8 +4,10 @@
 
 # 📝 Don'tForget  
 
-Don'tForget est une application de gestion de tâches avec rappels intelligents.  
-Elle permet d’organiser ses activités, de recevoir des notifications pour ne rien oublier, et d’expérimenter le développement d’applications modernes (backend, frontend, et mobile).  
+[**👉 Accéder à l’application en ligne**](https://dontforget.site)  
+
+**Don'tForget** est une application moderne de gestion de tâches avec rappels intelligents.  
+Elle permet d’organiser ses activités, de recevoir des notifications pour ne rien oublier, et d’expérimenter le développement **full-stack** (backend, frontend et mobile).  
 
 ---
 
@@ -14,8 +16,9 @@ Elle permet d’organiser ses activités, de recevoir des notifications pour ne 
 - ✅ Création, modification et suppression de tâches  
 - 🔔 Système de rappels et notifications personnalisés  
 - 📅 Gestion des échéances (deadlines)  
-- 📊 Suivi de l’état des tâches (en cours, terminées)  
-- 📱 Application web et version mobile en développement  
+- 📊 Suivi de l’état des tâches (à faire, en cours, terminées)  
+- 👤 Gestion du profil utilisateur  
+- 📱 Application web déjà disponible, version mobile en cours de développement  
 
 ---
 
@@ -23,16 +26,32 @@ Elle permet d’organiser ses activités, de recevoir des notifications pour ne 
 
 Le projet est conçu pour être **modulaire** et **scalable** :  
 
-- **Backend** : Spring Boot (Java)  
-  - API REST pour gérer les tâches et rappels  
-  - Sécurité avec JWT (JSON Web Tokens)  
-  - Base de données PostgreSQL  
+### 🔹 Backend  
+- **Spring Boot (Java)**  
+- API REST pour gérer les tâches et rappels  
+- Sécurité avec **JWT (JSON Web Tokens)**  
+- Base de données **PostgreSQL**  
+- Planification des rappels côté serveur  
 
-- **Frontend** : React  
-  - Interface utilisateur intuitive  
-  - Gestion du profil et des tâches en temps réel  
+### 🔹 Frontend  
+- **React.js**  
+- Interface utilisateur intuitive et responsive  
+- Gestion de l’authentification et du profil  
+- Visualisation et manipulation des tâches en temps réel  
 
-- **Mobile (à venir)** : React Native / Flutter (expérimentation prévue)  
+### 🔹 Mobile *(à venir)*  
+- Expérimentation prévue avec **React Native** ou **Flutter**  
+- Synchronisation avec la version web et notifications locales  
+
+---
+
+## 📂 Objectifs pédagogiques  
+
+Le projet **Don'tForget** a aussi pour but de :  
+- Mettre en pratique les notions de développement web full-stack  
+- Expérimenter la sécurité (authentification JWT, OAuth2 Google)  
+- Découvrir la planification et la gestion d’événements temps réel  
+- Préparer une extension vers le mobile  
 
 ---
 
@@ -42,3 +61,5 @@ Projet développé par :
 - **Abderahmane Nazim HAMIA**  
 
 ---
+
+🔗 **Lien vers le site officiel :** [https://dontforget.site](https://dontforget.site)  
