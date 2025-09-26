@@ -145,7 +145,7 @@
 .flex{
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
     width: 95%;
     margin: auto;
     padding-bottom: 15px;
@@ -159,28 +159,15 @@
 .flex label:hover{
     color: rgb(59, 124, 243);
 }
+
 .flex button{
-    background: transparent;
+    background-color: transparent;
     border: none;
-    font-size: 30px;
-    color: rgb(59, 124, 243);
-    margin-top: 10px;
-    transition: all .5s;
     cursor: pointer;
+    transition: all .5s;
 }
 .flex button:hover{
-    transform: scale(1.15);
-    color: #000;
-}
-.error, .success{
-    width: fit-content;
-    padding: 20px 50px;
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    border-radius: 10px;
-    background-color: #fff;
-    transform: translate(-50%, -50%);
+    transform: scale(1.2);
 }
 .success{
     border: solid 1px rgb(38, 184, 38);
@@ -202,7 +189,48 @@
     .formulaireTache{
         width: 300px;
     }
-    .flex{
-        width: 300px;
-    }
+}
+/* Overlay sombre derrière le calendrier */
+.popUpOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popUpCalendrier {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  max-width: 1000px;
+  width: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .popUpCalendrier {
+    width: 65%;
+    height: 90vh;
+    padding: 15px;
+    border-radius: 12px;
+  }
 }

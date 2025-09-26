@@ -5,10 +5,13 @@ import { useNavigate } from "react-router-dom";
 import ListeDesTaches from "../components/ListeDesTaches";
 import { IoMdAdd } from "react-icons/io";
 import { getCookie } from "../utils/cookies";
+import Calendrier from "../components/Calendrier"; 
+import { CiCalendar } from "react-icons/ci";
 
 function DashboardUser() {
     const [showPopup, setShowPopup] = useState(false);
     const [popUpTache, setPopUpTache] = useState(false);
+    const [popUpCalendrier, setPopUpCalendrier] = useState(false);
     const [tache, setTache] = useState("");
     const [deadline, setDeadline] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -49,11 +52,10 @@ function DashboardUser() {
         }
     }, [data]);
 
-    // 🔥 Fermer le formulaire quand on clique ailleurs
+    // 🔥 Fermer formulaire tâche si clic ailleurs
     useEffect(() => {
-        if (!popUpTache) return;
         const handleClickOutside = (e) => {
-            if (tacheRef.current && !tacheRef.current.contains(e.target)) {
+            if (popUpTache && tacheRef.current && !tacheRef.current.contains(e.target)) {
                 setPopUpTache(false);
             }
         };
@@ -79,7 +81,8 @@ function DashboardUser() {
 
         const payload = {
             texte: tache,
-            mustBeFinishedAt: new Date(deadline).toISOString(), // 🔥 conversion ISO
+            mustBeFinishedAt: new Date(deadline).toISOString(),
+            user: { id: data.id }
         };
 
         try {
@@ -152,6 +155,8 @@ function DashboardUser() {
 
             <div className={styles.flex}>
                 <label htmlFor="liste" className={styles.listeDesTaches}>To do</label>
+                <button onClick={() => setPopUpCalendrier(true)}><CiCalendar size={30}/></button>
+
             </div>
 
             <ListeDesTaches
@@ -162,6 +167,21 @@ function DashboardUser() {
             />
 
             {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+
+
+            {popUpCalendrier && (
+                <div 
+                    className={styles.popUpOverlay} 
+                    onClick={() => setPopUpCalendrier(false)}
+                >
+                    <div 
+                        className={styles.popUpCalendrier} 
+                        onClick={(e) => e.stopPropagation()} 
+                    >
+                        <Calendrier />
+                    </div>
+                </div>
+            )}
         </>
     );
 }
