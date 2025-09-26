@@ -6,7 +6,7 @@ import ListeDesTaches from "../components/ListeDesTaches";
 import { IoMdAdd } from "react-icons/io";
 import { getCookie } from "../utils/cookies";
 import Calendrier from "../components/Calendrier"; 
-import { CiCalendar } from "react-icons/ci";
+import { IoCalendarOutline } from "react-icons/io5";
 
 function DashboardUser() {
     const [showPopup, setShowPopup] = useState(false);
@@ -155,7 +155,7 @@ function DashboardUser() {
 
             <div className={styles.flex}>
                 <label htmlFor="liste" className={styles.listeDesTaches}>To do</label>
-                <button onClick={() => setPopUpCalendrier(true)}><CiCalendar size={30}/></button>
+                <button onClick={() => setPopUpCalendrier(true)}><IoCalendarOutline size={30}/></button>
 
             </div>
 

@@ -43,7 +43,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         Set<GrantedAuthority> authorities = new HashSet<>(delegate.getAuthorities());
 
-        // 🔥 Uniformisation → toujours "id"
         attrs.put("id", user.getId());
 
         String nameAttrKey = userRequest.getClientRegistration()

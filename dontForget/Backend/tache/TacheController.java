@@ -2,7 +2,6 @@ package com.example.dontForget.tache;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -25,9 +24,6 @@ public class TacheController {
     private final TacheRepository tacheRepository;
     private final AppUserRepository appUserRepository;
     private final ReminderScheduler reminderScheduler;
-
-    private static final DateTimeFormatter formatter =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     @PostMapping("/create")
     public ResponseEntity<?> createTache(@RequestBody Tache tache, Authentication authentication) {
@@ -54,14 +50,12 @@ public class TacheController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur non trouvé");
             }
         }
-
         OffsetDateTime nowUtc = OffsetDateTime.now(ZoneOffset.UTC);
 
         if (tache.getMustBeFinishedAt() != null && tache.getMustBeFinishedAt().isBefore(nowUtc)) {
             return ResponseEntity.badRequest()
-                    .body("La date d'échéance doit être postérieure au " + nowUtc.format(formatter) + ".");
+                .body("La date d'échéance doit être postérieure à maintenant.");
         }
-
         tache.setCreatedAt(nowUtc);
         tache.setUser(user);
         tache.setStatut(Statut.A_FAIRE);
@@ -106,7 +100,7 @@ public class TacheController {
         if (request.getMustBeFinishedAt() != null) {
             if (request.getMustBeFinishedAt().isBefore(nowUtc)) {
                 return ResponseEntity.badRequest()
-                        .body("La date d'échéance doit être postérieure au " + nowUtc.format(formatter) + ".");
+                        .body("La date d'échéance doit être postérieure à maintenant.");
             }
             tache.setMustBeFinishedAt(request.getMustBeFinishedAt());
         }
@@ -114,7 +108,7 @@ public class TacheController {
         if (request.getReminder() != null) {
             if (request.getReminder().isBefore(nowUtc)) {
                 return ResponseEntity.badRequest()
-                        .body("La date de rappel doit être postérieure au " + nowUtc.format(formatter) + ".");
+                        .body("La date de rappel doit être postérieure à maitenant.");
             }
             tache.setReminder(request.getReminder());
         }

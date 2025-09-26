@@ -174,7 +174,16 @@
     color: rgb(38, 184, 38);
 }
 .error{
-    border: solid 1px rgb(255, 0, 0);
+    border: solid .5px #757575;
+    border-radius: 20px;
+    padding: 10px 50px;
+    background-color:#fff;
+    text-align: center;
+    color: red;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: rgb(255, 0, 0);
 }
 @media screen and (max-width:700px) {
