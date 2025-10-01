@@ -21,7 +21,13 @@
     cursor: pointer;
     transition: all .5s;
 }
-.liste>li:hover{
+.liste > li > a{
+    text-decoration: none;
+    color: #737373;
+    cursor: pointer;
+    transition: all .5s;
+}
+.liste>li:hover, .liste>li>a:hover{
     color: #000;
 }
 .aPropos{

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { LuCircleArrowRight } from "react-icons/lu";
 import { ImGithub } from "react-icons/im";
 import Navbar from "../components/Navbar";
+import Contact from "../components/Contact";
+
 function Accueil(){
     const navigate = useNavigate();
     const date = new Date();
@@ -38,7 +40,7 @@ function Accueil(){
                     <LuCircleArrowRight className={styles.fleche}/>
                 </button>
             </div>
-
+            <Contact id="contact"/>
             <footer>
                 <p className={styles.footer}>© {date.getFullYear()} Don<span style={{color:"rgb(59, 124, 243)"}}>'</span>t Forget. All rights reserved.</p>
             </footer>

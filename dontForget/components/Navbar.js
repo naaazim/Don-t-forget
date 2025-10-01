@@ -41,7 +41,7 @@ function Navbar(){
                             En quelques clics, vos journées sont mieux organisées et vos tâches toujours sous contrôle.
                         </p>
                     )}
-                <li>Contact<TbArrowDownToArc/></li>
+                <li><a href="#contact">Contact</a><TbArrowDownToArc/></li>
             </ul>
 
         </>
