@@ -27,29 +27,11 @@ public class TacheController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createTache(@RequestBody Tache tache, Authentication authentication) {
-        AppUser user;
-
-        if (authentication.getPrincipal() instanceof OAuth2User oauthUser) {
-            // 🔥 On récupère l’email (qui est garanti par Google)
-            String email = oauthUser.getAttribute("email");
-            if (email == null) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body("Utilisateur OAuth2 invalide : email manquant");
-            }
-
-            user = appUserRepository.findByEmail(email);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Utilisateur OAuth2 non trouvé en base");
-            }
-        } else {
-            // Cas JWT classique
-            String email = authentication.getName();
-            user = appUserRepository.findByEmail(email);
-            if (user == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur non trouvé");
-            }
+        AppUser user = getUserFromAuth(authentication);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur non trouvé");
         }
+
         OffsetDateTime nowUtc = OffsetDateTime.now(ZoneOffset.UTC);
 
         if (tache.getMustBeFinishedAt() != null && tache.getMustBeFinishedAt().isBefore(nowUtc)) {
@@ -72,29 +54,44 @@ public class TacheController {
     }
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<?> getTacheById(@PathVariable Long id) {
-        return tacheRepository.findById(id)
-                .<ResponseEntity<?>>map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Aucune tâche avec cet ID"));
+    public ResponseEntity<?> getTacheById(@PathVariable Long id, Authentication authentication) {
+        Optional<Tache> tacheOptional = tacheRepository.findById(id);
+        if (!tacheOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aucune tâche avec cet ID");
+        }
+        Tache tache = tacheOptional.get();
+
+        AppUser user = getUserFromAuth(authentication);
+        if (user == null || !tache.getUser().getId().equals(user.getId())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Accès interdit à cette tâche");
+        }
+
+        return ResponseEntity.ok(tache);
     }
 
-    @GetMapping("/getAllByUser/{id}")
-    public ResponseEntity<?> getAll(@PathVariable Long id) {
-        return appUserRepository.findById(id)
-                .<ResponseEntity<?>>map(user -> ResponseEntity.ok(tacheRepository.findByUser(user)))
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Aucun utilisateur avec cet ID"));
+    @GetMapping("/me")
+    public ResponseEntity<?> getMyTaches(Authentication authentication) {
+        AppUser user = getUserFromAuth(authentication);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur non trouvé");
+        }
+        return ResponseEntity.ok(tacheRepository.findByUser(user));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateTache(@PathVariable Long id, @RequestBody Tache request) {
+    public ResponseEntity<?> updateTache(@PathVariable Long id, @RequestBody Tache request, Authentication authentication) {
         Optional<Tache> tacheOptional = tacheRepository.findById(id);
         if (!tacheOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aucune tâche avec cet ID");
         }
 
         Tache tache = tacheOptional.get();
+
+        AppUser user = getUserFromAuth(authentication);
+        if (user == null || !tache.getUser().getId().equals(user.getId())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Accès interdit à cette tâche");
+        }
+
         OffsetDateTime nowUtc = OffsetDateTime.now(ZoneOffset.UTC);
 
         if (request.getMustBeFinishedAt() != null) {
@@ -132,12 +129,33 @@ public class TacheController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteTache(@PathVariable Long id) {
+    public ResponseEntity<?> deleteTache(@PathVariable Long id, Authentication authentication) {
         Optional<Tache> tacheOptional = tacheRepository.findById(id);
         if (!tacheOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aucune tâche avec cet ID");
         }
-        tacheRepository.delete(tacheOptional.get());
+
+        Tache tache = tacheOptional.get();
+
+        AppUser user = getUserFromAuth(authentication);
+        if (user == null || !tache.getUser().getId().equals(user.getId())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Accès interdit à cette tâche");
+        }
+
+        tacheRepository.delete(tache);
         return ResponseEntity.ok("Tâche supprimée avec succès");
+    }
+
+    private AppUser getUserFromAuth(Authentication authentication) {
+        if (authentication == null) return null;
+
+        if (authentication.getPrincipal() instanceof OAuth2User oauthUser) {
+            String email = oauthUser.getAttribute("email");
+            if (email == null) return null;
+            return appUserRepository.findByEmail(email);
+        } else {
+            String email = authentication.getName();
+            return appUserRepository.findByEmail(email);
+        }
     }
 }

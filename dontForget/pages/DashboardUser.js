@@ -41,14 +41,15 @@ function DashboardUser() {
         }
     }, [navigate]);
 
-    const fetchTaches = async (userId) => {
-        const res = await axios.get(`/api/v1/tache/getAllByUser/${userId}`, { withCredentials: true });
+    const fetchTaches = async () => {
+        const res = await axios.get(`/api/v1/tache/me`, { withCredentials: true });
         setTaches(res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
-    };
+    }; 
+
 
     useEffect(() => {
-        if (data?.id) {
-            fetchTaches(data.id);
+        if (data) {
+            fetchTaches();
         }
     }, [data]);
 

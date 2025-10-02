@@ -142,3 +142,25 @@
 .password-toggle:hover {
     color: #000;
 }
+/* Style de base pour les pop-ups */
+.popUp, .popUpSuccess, .popUpError {
+    text-align: center;
+    color: #737373;
+    padding: 10px 30px;
+    border: none;    
+    z-index: 1000;
+    text-align: center;
+    font-family: system-ui;
+    width: auto;
+    margin-bottom: 20px;
+}
+
+/* Style pour la pop-up de succès */
+.popUpSuccess {
+    color: rgb(1, 164, 1);
+}
+
+/* Style pour la pop-up d'erreur */
+.popUpError {
+    color: red;
+}

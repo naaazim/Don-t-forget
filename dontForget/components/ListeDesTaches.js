@@ -3,20 +3,20 @@ import axios from "../axiosConfig";
 import ModifierTache from "./ModiferTache";
 import styles from "../style/listeDesTaches.module.css";
 
-function ListeDesTaches({ id, taches, setTaches, onUpdate }) {
+function ListeDesTaches({ taches, setTaches, onUpdate }) {
     const [error, setError] = useState("");
 
     useEffect(() => {
         const fetchTaches = async () => {
             try {
-                const reponse = await axios.get(`/api/v1/tache/getAllByUser/${id}`, { withCredentials: true });
+                const reponse = await axios.get(`/api/v1/tache/me`, { withCredentials: true });
                 setTaches(reponse.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
             } catch (err) {
                 setError("Erreur lors de la récupération des tâches.");
             }
         };
-        if (id && taches.length === 0) fetchTaches();
-    }, [id, setTaches, taches.length]);
+        if (taches.length === 0) fetchTaches();
+    }, [setTaches, taches.length]);
 
     const supprimerTacheLocalement = (tacheId) => {
         setTaches(taches.filter((t) => t.id !== tacheId));
@@ -73,7 +73,7 @@ function ListeDesTaches({ id, taches, setTaches, onUpdate }) {
                                     <ModifierTache
                                         id={tache.id}
                                         onDelete={() => supprimerTacheLocalement(tache.id)}
-                                        onUpdate={onUpdate} // 🔥 passe onUpdate
+                                        onUpdate={onUpdate} 
                                     />
                                 </div>
                             </div>
