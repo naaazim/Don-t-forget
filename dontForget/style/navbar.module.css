@@ -1,4 +1,4 @@
-.liste{
+.liste {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -8,10 +8,10 @@
     width: fit-content;
     padding: 15px 30px;
     border-radius: 50px;
-
 }
 
-.liste>li{
+.liste > li {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -21,7 +21,24 @@
     cursor: pointer;
     transition: all .5s;
 }
-.liste > li > a{
+
+.liste > li::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgb(59, 124, 243);
+    transition: width 0.4s ease;
+}
+
+.liste > li:hover::after {
+    width: 100%;
+}
+
+.liste > li > a {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -30,10 +47,28 @@
     cursor: pointer;
     transition: all .5s;
 }
-.liste>li:hover, .liste>li>a:hover{
+
+.liste > li > a::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgb(59, 124, 243);
+    transition: width 0.4s ease;
+}
+
+.liste > li > a:hover::after {
+    width: 100%;
+}
+
+.liste > li:hover,
+.liste > li > a:hover {
     color: #000;
 }
-.aPropos{
+
+.aPropos {
     background-color: #fff;
     color: #737373;
     line-height: 1.38;
@@ -42,27 +77,32 @@
     box-shadow: .5px .5px 20px #afaeae;
     width: 500px;
     position: fixed;
-    top: 10%;
+    top: 7.6%;
     left: 15%;
     text-align: justify;
     font-family: Arial, Helvetica, sans-serif;
 }
-.aPropos li{
-    list-style:disc;
+
+.aPropos li {
+    list-style: disc;
 }
-.aPropos li::marker{
+
+.aPropos li::marker {
     color: rgb(59, 124, 243);
 }
+
 .aPropos::after {
     content: "";
     position: absolute;
-    top: -20px; 
-    left: 265px; 
+    top: -20px;
+    left: 265px;
     border-width: 10px;
     border-style: solid;
-    border-color: transparent transparent #fff transparent; 
+    border-color: transparent transparent #fff transparent;
 }
-.fonctionnement{
+
+/* --- POPUP FONCTIONNEMENT --- */
+.fonctionnement {
     background-color: #fff;
     color: #737373;
     line-height: 1.38;
@@ -71,28 +111,33 @@
     box-shadow: .5px .5px 20px #afaeae;
     width: 420px;
     position: fixed;
-    top: 10%;
+    top: 7.6%;
     left: 29%;
     text-align: start;
     font-family: Arial, Helvetica, sans-serif;
 }
+
 .fonctionnement::after {
     content: "";
     position: absolute;
-    top: -20px; 
-    left: 220px; 
+    top: -20px;
+    left: 220px;
     border-width: 10px;
     border-style: solid;
-    border-color: transparent transparent #fff transparent; 
+    border-color: transparent transparent #fff transparent;
 }
-.fonctionnement li{
-    list-style:decimal;
+
+.fonctionnement li {
+    list-style: decimal;
 }
-.fonctionnement li::marker{
+
+.fonctionnement li::marker {
     color: rgb(59, 124, 243);
 }
-@media screen and (max-width:1250px){
-    .liste{
+
+/* --- RESPONSIVE --- */
+@media screen and (max-width:1250px) {
+    .liste {
         display: none;
     }
 }

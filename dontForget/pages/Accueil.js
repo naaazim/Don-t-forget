@@ -30,17 +30,7 @@ function Accueil(){
             <p className={styles.presentation}> 
                 Gérer ses tâches devient facile avec Don<span className={styles.apostrophe}>'</span>t Forget, <br/>la plateforme qui simplifie le suivi de votre organisation au quotidien. 
             </p>
-            <div className={styles.division}>
-                <button
-                    onClick={() => {
-                        navigate("/login");
-                    }}
-                >
-                    <span>Commencer</span>
-                    <LuCircleArrowRight className={styles.fleche}/>
-                </button>
-            </div>
-            <p className={styles.commentCaMarche}>Rendu mûlti-plateforme</p>
+            <p className={styles.commentCaMarche}>Plannifiez, accomplissez et n'oubliez jamais.</p>
             <div className={styles.container} id="fonctionnement">
                 <img
                     className={styles.image1}
@@ -73,6 +63,16 @@ function Accueil(){
                     src={`${process.env.PUBLIC_URL}/feuille.png`}
                 />
                 </div>
+            <div className={styles.division}>
+                <button
+                    onClick={() => {
+                        navigate("/login");
+                    }}
+                >
+                    <span>Commencer</span>
+                    <LuCircleArrowRight className={styles.fleche}/>
+                </button>
+            </div>
             <p className={styles.contact}>Contact</p>
             <Contact id="contact"/>
             <footer>

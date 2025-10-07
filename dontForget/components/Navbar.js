@@ -1,10 +1,30 @@
 import { TbArrowDownToArc } from "react-icons/tb";
 import styles from "../style/navbar.module.css";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 function Navbar() {
     const [aPropos, setAPropos] = useState(false);
     const [fonctionnement, setFonctionnement] = useState(false);
+
+    const aProposRef = useRef(null);
+    const fonctionnementRef = useRef(null);
+
+    // Ferme les paragraphes si le curseur sort du li ET du paragraphe
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            if (aProposRef.current && !aProposRef.current.contains(e.target) && !e.target.closest(`.${styles.aPropos}`)) {
+                setAPropos(false);
+            }
+            if (fonctionnementRef.current && !fonctionnementRef.current.contains(e.target) && !e.target.closest(`.${styles.fonctionnement}`)) {
+                setFonctionnement(false);
+            }
+        };
+
+        document.addEventListener("mousemove", handleMouseMove);
+        return () => {
+            document.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, []);
 
     const scrollToSection = (id) => {
         const section = document.getElementById(id);
@@ -16,14 +36,19 @@ function Navbar() {
     return (
         <>
             <ul className={styles.liste}>
+                {/* À propos */}
                 <li
+                    ref={aProposRef}
                     onMouseEnter={() => setAPropos(true)}
-                    onMouseLeave={() => setAPropos(false)}
                 >
-                    A propos <TbArrowDownToArc />
+                    À propos <TbArrowDownToArc />
                 </li>
                 {aPropos && (
-                    <p className={styles.aPropos}>
+                    <p
+                        className={styles.aPropos}
+                        onMouseEnter={() => setAPropos(true)}
+                        onMouseLeave={() => setAPropos(false)}
+                    >
                         Don<span style={{ color: "rgb(59, 124, 243)", fontWeight: "bold" }}>’</span>t forget est une application conçue pour vous aider à mieux organiser vos journées.
                         Notre objectif est simple : vous offrir un outil intuitif et agréable qui vous accompagne dans la gestion de vos tâches quotidiennes.
                         <ul>
@@ -35,9 +60,10 @@ function Navbar() {
                     </p>
                 )}
 
+                {/* Fonctionnement */}
                 <li
+                    ref={fonctionnementRef}
                     onMouseEnter={() => setFonctionnement(true)}
-                    onMouseLeave={() => setFonctionnement(false)}
                     onClick={() => scrollToSection("fonctionnement")}
                     style={{ cursor: "pointer" }}
                 >
@@ -45,7 +71,11 @@ function Navbar() {
                 </li>
 
                 {fonctionnement && (
-                    <p className={styles.fonctionnement}>
+                    <p
+                        className={styles.fonctionnement}
+                        onMouseEnter={() => setFonctionnement(true)}
+                        onMouseLeave={() => setFonctionnement(false)}
+                    >
                         Avec Don<span style={{ color: "rgb(59, 124, 243)", fontWeight: "bold" }}>’</span>t Forget, organiser vos journées devient facile :
                         <ul>
                             <li>Créer vos tâches rapidement et facilement.</li>
