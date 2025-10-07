@@ -40,6 +40,40 @@ function Accueil(){
                     <LuCircleArrowRight className={styles.fleche}/>
                 </button>
             </div>
+            <p className={styles.commentCaMarche}>Rendu mûlti-plateforme</p>
+            <div className={styles.container} id="fonctionnement">
+                <img
+                    className={styles.image1}
+                    alt="rendu du site"
+                    src={`${process.env.PUBLIC_URL}/ecran.png`}
+                />
+                <img
+                    className={styles.image2}
+                    alt="rendu du site"
+                    src={`${process.env.PUBLIC_URL}/DB.png`}
+                />
+                <img
+                    className={styles.image4}
+                    alt="rendu du site"
+                    src={`${process.env.PUBLIC_URL}/calendrier.png`}
+                />
+                <img
+                    className={styles.image5}
+                    alt="rendu du site"
+                    src={`${process.env.PUBLIC_URL}/phone.png`}
+                />
+                <img
+                    className={styles.image6}
+                    alt="rendu du site"
+                    src={`${process.env.PUBLIC_URL}/login.png`}
+                />
+                <img
+                    className={styles.image7}
+                    alt="rendu du site"
+                    src={`${process.env.PUBLIC_URL}/feuille.png`}
+                />
+                </div>
+            <p className={styles.contact}>Contact</p>
             <Contact id="contact"/>
             <footer>
                 <p className={styles.footer}>© {date.getFullYear()} Don<span style={{color:"rgb(59, 124, 243)"}}>'</span>t Forget. All rights reserved.</p>

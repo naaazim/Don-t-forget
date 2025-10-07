@@ -23,14 +23,14 @@ function Calendrier() {
 
     try {
       const parsedUser = JSON.parse(decodeURIComponent(userString));
-      if (!parsedUser || !parsedUser.id) {
+      if (!parsedUser) {
         navigate("/login");
         return;
       }
 
       const fetchTaches = async () => {
         try {
-          const reponse = await axios.get(`/api/v1/tache/getAllByUser/${parsedUser.id}`, {
+          const reponse = await axios.get(`/api/v1/tache/me`, {
             withCredentials: true,
           });
           setTaches(reponse.data);
