@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+#app {
+    margin-top: 40px;
+  }
+  
+  #progressInput {
+    margin: 20px auto;
+    width: 30%;
+  }
+  
+  .circle-background,
+  .circle-progress {
+    fill: none;
+  }
+  
+  .circle-background {
+    stroke: #ddd;
+  }
+  
+  .circle-progress {
+    stroke: #ffb600;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  
+  .circle-text {
+    font-size: 3em;
+    font-weight: bold;
+  }
+
+  .analysesContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+    margin-top: 50px;
+    width: 60vw;
+
+  }
+
+.note{
+    width: 400px;
+    color:white;
+    background-color: #1a3e5a;
+    font-size: 25px;
+    padding: 10px;
+    border-radius: 20px;
+    font-family:  "Montserrat" , sans-serif;
+}
+
+.notes{
+    margin-left: 30px;
+}

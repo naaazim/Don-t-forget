@@ -1,0 +1,16 @@
+export { default as Login } from './Login';
+export { default as Register } from './Register';
+export { default as DashboardEtudiant } from './DB_EXAMINE';
+export { default as DBExaminateur } from './DBExaminateur';
+export { default as Home } from './Home';
+export { default as AjouterPasseExamen } from './AjouterPasseExamen';
+export { default as GestionRoles } from './GestionRoles';
+export { default as GestionGroupes } from './GestionGroupes';
+export { default as Activate } from './Activate';
+export { default as ModificationExamen } from './ModificationExamen';
+export { default as GestionExamen } from './GestionExamen';
+export { default as Analyses } from './Analyses';
+export { default as Consultation } from './Consultation';
+export { default as CorrectionExamen } from './CorrectionExamen';
+export { default as PasseExamen } from './PasseExamen';
+export { default as NotFound } from './NotFound';

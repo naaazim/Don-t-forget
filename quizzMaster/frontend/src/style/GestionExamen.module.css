@@ -1,0 +1,119 @@
+.gestion-examens-container {
+    padding: 40px;
+  }
+  
+  .examens-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+  }
+  
+  .examen-card {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: center;
+    background-color: #f0f4ff;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .bt-supprimer {
+    margin-right: 10px;
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+  }
+  
+  .bt-modifier {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+  }
+  
+  .examens-actions {
+    margin-top: 30px;
+  }
+  
+  .bt-ajouter {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #10b981;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+  }
+  
+  .bt-terminer {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f9fafb;
+    font-weight: bold;
+  }
+
+  .modal {
+    position: fixed;
+    top: 20%;
+    left: 35%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1000;
+    width: 30%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    height: 40px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .bt-annuler {
+    padding: 8px 16px;
+    background-color: #e5e7eb;
+    color: #111827;
+    border-radius: 6px;
+    border: none;
+  }
+  
+  .bt-valider {
+    padding: 8px 16px;
+    background-color: #1e3a8a;
+    color: white;
+    border-radius: 6px;
+    border: none;
+  }
+
+  

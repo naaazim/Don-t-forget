@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+.formulaire{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.formulaire label{
+    font-family: "Bungee";
+    color: #fff;
+    margin: 0 0 5px 10px;
+}
+.formulaire input{
+    text-align: start;
+    width: 280px;
+    padding: 10px;
+    border: 1px solid rgb(240, 113, 23);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}

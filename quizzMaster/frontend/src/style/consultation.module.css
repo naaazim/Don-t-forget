@@ -1,0 +1,33 @@
+.sheet{
+    width: 700px;
+    margin: auto;
+    border: solid 2px #213b74;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: justify;
+    font-family: System-ui;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+.titre{
+    text-align: center;
+}
+.bonneReponse{
+    padding: 0 10px;
+    min-height: 110px;
+    height: auto;
+    width: 95%;
+    border: solid 2px rgb(23, 235, 47);
+    border-radius: 15px;
+    background-color: rgba(23, 235, 47,.3);
+}
+.mauvaiseReponse{
+    padding: 0 10px;
+    min-height: 110px;
+    height: auto;
+    width: 95%;
+    border: solid 2px rgb(255, 0, 0);
+    border-radius: 15px;
+    background-color: rgba(255, 0, 0, 0.3);
+}

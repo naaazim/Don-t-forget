@@ -1,0 +1,22 @@
+.actions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin:  0;
+    padding: 10px;
+}
+
+.actions button {
+    background-color: transparent; 
+    color: #1a3e5a; 
+    border: 2px solid #1a3e5a; 
+    border-radius: 10px;
+    padding: 12px 100px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    background-color: #1a3e5a; 
+    color: white; 
+}
