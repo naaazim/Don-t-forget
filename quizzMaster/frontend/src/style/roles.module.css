@@ -1,0 +1,25 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.buttonAction{
+    width: 20vw;
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: #1a3e5a;
+    border: 1px solid #1a3e5a;
+    background-color: transparent;
+    margin: 2vw;
+    border-radius: 20px;
+}
+
+.buttonActionActive{
+    width: 20vw;
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    border: 1px solid #1a3e5a;
+    background-color: #1a3e5a;
+    margin: 2vw;
+    border-radius: 20px;
+}

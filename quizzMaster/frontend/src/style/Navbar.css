@@ -1,0 +1,46 @@
+.bt-deconnexion{
+    padding: 10px;
+    height: 30px;
+    width: 200px;
+    text-align: center;
+    border-radius: 20vw;
+    font-family: "Montserrat", sans-serif ;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    background-color: #FEB201 ;
+}
+
+.nav-gauche{
+    width: 30%;
+}
+
+.nav-mid{
+    width: 40%;
+    justify-items: center;
+}
+.nav-droite{
+    padding: 1vw;
+    width: 30%;
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+}
+
+.initials{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    color: white;
+    background-color: #FF7134;
+    justify-items: center;
+    font-size: 15px;
+    margin-right: 1vw;
+}
+
+.nav{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

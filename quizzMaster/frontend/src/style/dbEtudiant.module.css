@@ -1,0 +1,111 @@
+.btDeconnexion{
+    width: 160px;
+    height: 43px;
+
+    background-color: #ffb600;
+    border: solid 2px transparent;
+    margin-top: 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #fff;
+}
+.navGauche{
+    width: 30%;
+}
+.navMid{
+    width: 40%;
+    justify-items: center;
+}
+.navDroite{
+    padding: 1vw;
+    width: 30%;
+    flex-direction: row;
+    display: flex;
+    justify-content: end;
+}
+.tab{
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 25px;
+}
+.initials{
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+    color: white;
+    background-color: #FF7134;
+    justify-items: center;
+    font-size: 15px;
+    font-family: sans-serif;
+    margin-right: 1vw;
+    text-align: center;
+    margin-top: 10px;
+}
+.nav{
+    position: relative;
+    top: -50px;
+    margin: auto;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.gererGroupes{
+    width: 200px;
+    color: #213b74;
+    border: solid 2px #213b74;
+    border-radius: 15px;
+    background-color: transparent;
+    height: 45px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.gererGroupes:hover{
+    background-color: #213b74;
+    color: #fff;
+    transition: .7s;
+}
+.bordureBasse{
+    width: 95%;
+    margin: auto;
+    border-bottom: solid 1px black;
+}
+.examensItems{
+    display: flex;
+    justify-content: space-between;
+}
+.listExamens{
+    position: relative;
+    left: 30px;
+    font-family: sans-serif;
+    font-size: 20px;
+}
+.examensPasses{
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    border-bottom: solid 1px black;
+}
+.triangle{
+    float: right;
+}
+.consulter{
+    float: right;
+    margin-right: 5%;
+    margin-top: 20px;
+    width: 140px;
+    color: #213b74;
+    border: solid 2px #213b74;
+    border-radius: 15px;
+    background-color: transparent;
+    height: 40px;
+    cursor: pointer;
+}
+.consulter:hover{
+    background-color: #213b74;
+    color: #fff;
+    transition: .7s;
+}
