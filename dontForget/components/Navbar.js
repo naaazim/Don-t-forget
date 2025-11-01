@@ -41,24 +41,26 @@ function Navbar() {
                     ref={aProposRef}
                     onMouseEnter={() => setAPropos(true)}
                 >
-                    À propos <TbArrowDownToArc />
+                    <div style={{display:"flex", alignItems:"center", gap: "10px"}}>
+                        À propos <TbArrowDownToArc style={{marginTop:"2px", color:"rgb(59, 124, 243)"}}/>
+                    </div>
+                    {aPropos && (
+                        <p
+                            className={styles.aPropos}
+                            onMouseEnter={() => setAPropos(true)}
+                            onMouseLeave={() => setAPropos(false)}
+                        >
+                            Don<span style={{ color: "rgb(59, 124, 243)", fontWeight: "bold" }}>’</span>t forget est une application conçue pour vous aider à mieux organiser vos journées.
+                            Notre objectif est simple : vous offrir un outil intuitif et agréable qui vous accompagne dans la gestion de vos tâches quotidiennes.
+                            <ul className={styles.liste2}>
+                                <li>Créer et suivre vos listes de tâches facilement.</li>
+                                <li>Organiser vos priorités sans stress.</li>
+                                <li>Ne plus rien oublier grâce à un système de rappels.</li>
+                                <li>Profiter d’une interface moderne et simple d’utilisation.</li>
+                            </ul>
+                        </p>
+                    )} 
                 </li>
-                {aPropos && (
-                    <p
-                        className={styles.aPropos}
-                        onMouseEnter={() => setAPropos(true)}
-                        onMouseLeave={() => setAPropos(false)}
-                    >
-                        Don<span style={{ color: "rgb(59, 124, 243)", fontWeight: "bold" }}>’</span>t forget est une application conçue pour vous aider à mieux organiser vos journées.
-                        Notre objectif est simple : vous offrir un outil intuitif et agréable qui vous accompagne dans la gestion de vos tâches quotidiennes.
-                        <ul>
-                            <li>Créer et suivre vos listes de tâches facilement.</li>
-                            <li>Organiser vos priorités sans stress.</li>
-                            <li>Ne plus rien oublier grâce à un système de rappels.</li>
-                            <li>Profiter d’une interface moderne et simple d’utilisation.</li>
-                        </ul>
-                    </p>
-                )}
 
                 {/* Fonctionnement */}
                 <li
@@ -67,27 +69,29 @@ function Navbar() {
                     onClick={() => scrollToSection("fonctionnement")}
                     style={{ cursor: "pointer" }}
                 >
-                    Fonctionnement <TbArrowDownToArc />
+                    <div style={{display:"flex", alignItems:"center", gap: "10px"}}>
+                        Fonctionnement <TbArrowDownToArc style={{marginTop:"2px", color:"rgb(59, 124, 243)"}}/>
+                    </div>
+                    {fonctionnement && (
+                        <p
+                            className={styles.fonctionnement}
+                            onMouseEnter={() => setFonctionnement(true)}
+                            onMouseLeave={() => setFonctionnement(false)}
+                        >
+                            Avec Don<span style={{ color: "rgb(59, 124, 243)", fontWeight: "bold" }}>’</span>t Forget, organiser vos journées devient facile :
+                            <ul>
+                                <li>Créer vos tâches rapidement et facilement.</li>
+                                <li>Programmer des rappels pour ne rien oublier.</li>
+                                <li>Consulter vos listes à tout moment depuis une interface claire et intuitive.</li>
+                            </ul>
+                            En quelques clics, vos journées sont mieux organisées et vos tâches toujours sous contrôle.
+                        </p>
+                    )}
                 </li>
 
-                {fonctionnement && (
-                    <p
-                        className={styles.fonctionnement}
-                        onMouseEnter={() => setFonctionnement(true)}
-                        onMouseLeave={() => setFonctionnement(false)}
-                    >
-                        Avec Don<span style={{ color: "rgb(59, 124, 243)", fontWeight: "bold" }}>’</span>t Forget, organiser vos journées devient facile :
-                        <ul>
-                            <li>Créer vos tâches rapidement et facilement.</li>
-                            <li>Programmer des rappels pour ne rien oublier.</li>
-                            <li>Consulter vos listes à tout moment depuis une interface claire et intuitive.</li>
-                        </ul>
-                        En quelques clics, vos journées sont mieux organisées et vos tâches toujours sous contrôle.
-                    </p>
-                )}
 
                 <li>
-                    <a href="#contact">Contact <TbArrowDownToArc /></a>
+                    <a href="#contact">Contact <TbArrowDownToArc style={{marginTop:"2px", color:"rgb(59, 124, 243)"}}/></a>
                 </li>
             </ul>
         </>
